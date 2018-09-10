@@ -1,0 +1,130 @@
+/* Login Styles */
+
+.flexbox-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 100vh
+}
+
+.unix-login {
+  background-color: #F4F5FA; 
+}
+
+.login-content {
+  margin: 0;
+}
+
+.log-brand {
+  text-align: center;
+  display: block;
+}
+
+.log-brand h2 {
+  font-weight: 700;
+  border: 1px solid #333;
+  display: inline-block;
+  padding: .2rem 1rem;
+  color: #333;
+}
+
+.log-title {
+  position: relative;
+  display: block;
+  text-align: center;
+  margin: 1.5rem 0 2rem;
+}
+
+.log-title::before {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background-color: #eaeaea;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.log-title h6 {
+  position: relative;
+  background: #fff;
+  display: inline-block;
+  padding: 0 .5rem;
+}
+
+/* Form Styles */
+
+.login-form form input::-webkit-input-placeholder {
+  color: #99abb4;
+}
+.login-form form input::-moz-placeholder {
+  color: #99abb4;
+}
+.login-form form input:-ms-input-placeholder {
+  color: #99abb4;
+}
+.login-form form input:-moz-placeholder {
+  color: #99abb4;
+}
+.styled-checkbox {
+  position: absolute;
+  opacity: 0;
+}
+.styled-checkbox + label {
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  text-transform: none; 
+}
+.styled-checkbox + label:before {
+  content: '';
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: text-top;
+  width: 20px;
+  height: 20px;
+  background: #eaeaea;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.styled-checkbox:hover + label:before {
+  background: #4680ff;
+}
+.styled-checkbox:focus + label:before {
+  -webkit-box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+.styled-checkbox:checked + label:before {
+  background: #4680ff;
+}
+.styled-checkbox:disabled + label {
+  color: #b8b8b8;
+  cursor: auto;
+}
+.styled-checkbox:disabled + label:before {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background: #ddd;
+}
+.styled-checkbox:checked + label:after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 9px;
+  background: white;
+  width: 2px;
+  height: 2px;
+  -webkit-box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+  box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
