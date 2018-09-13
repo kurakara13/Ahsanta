@@ -13,14 +13,22 @@
     <title>Ela - Bootstrap Admin Dashboard Template</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('assets-admin/css/lib/bootstrap/bootstrap.min.css')}}" rel="stylesheet">
+    @yield('css-lessstyle')
     <!-- Custom CSS -->
     <link href="{{asset('assets-admin/css/helper.css')}}" rel="stylesheet">
     <link href="{{asset('assets-admin/css/style.css')}}" rel="stylesheet">
+
+    <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+
     <style>
     .sidebar-nav > ul > li > a .label {
         position: static;
         right: 35px;
         top: 8px;
+    }
+
+    .footer{
+      bottom: 0;
     }
     </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -33,6 +41,7 @@
 
 <body class="fix-header fix-sidebar">
     <!-- Preloader - style you can find in spinners.css -->
+    @include('sweetalert::alert')
     <div class="preloader">
         <svg class="circular" viewBox="25 25 50 50">
 			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
@@ -133,7 +142,14 @@
                                     <li><a href="#"><i class="ti-user"></i> Profile</a></li>
                                     <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
                                     <li><a href="#"><i class="ti-settings"></i> Setting</a></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li>
+                                      <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                          <i class="fa fa-power-off"></i> {{ __('Logout') }}
+                                      </a>
+                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                          @csrf
+                                      </form>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -196,8 +212,10 @@
     <script src="{{asset('assets-admin/js/sidebarmenu.js')}}"></script>
     <!--stickey kit -->
     <script src="{{asset('assets-admin/js/lib/sticky-kit-master/dist/sticky-kit.min.js')}}"></script>
+    @yield('script-lesscustom')
     <!--Custom JavaScript -->
     <script src="{{asset('assets-admin/js/custom.min.js')}}"></script>
+    @yield('script-aftercustom')
 
 </body>
 

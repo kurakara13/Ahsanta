@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,14 +24,25 @@ Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/cart', 'HomeController@cart')->name('cart');
 
-Route::get('/admin/dashboard', 'AdminController@dashboard')->name('dashboard');
-Route::get('/admin/product', 'AdminController@product')->name('product');
-Route::get('/admin/category', 'AdminController@category')->name('category');
-Route::get('/admin/tag', 'AdminController@tag')->name('tag');
-Route::get('/admin/size', 'AdminController@size')->name('size');
-Route::get('/admin/promotion', 'AdminController@promotion')->name('promotion');
-Route::get('/admin/transaction', 'AdminController@transaction')->name('transaction');
-Route::get('/admin/order', 'AdminController@order')->name('order');
-Route::get('/admin/payment', 'AdminController@payment')->name('payment');
-Route::get('/admin/shipping', 'AdminController@shipping')->name('shipping');
-Route::get('/admin/user', 'AdminController@user')->name('user');
+
+Route::prefix('admin')->group(function() {
+    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    Route::get('/', 'AdminController@dashboard')->name('admin.home');
+    Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
+    Route::get('/product', 'AdminController@product')->name('product');
+    Route::get('/category', 'AdminController@category')->name('category');
+    Route::get('/tag', 'AdminController@tag')->name('tag');
+    Route::get('/size', 'AdminController@size')->name('size');
+    Route::get('/promotion', 'AdminController@promotion')->name('promotion');
+    Route::get('/transaction', 'AdminController@transaction')->name('transaction');
+    Route::get('/order', 'AdminController@order')->name('order');
+    Route::get('/payment', 'AdminController@payment')->name('payment');
+    Route::get('/shipping', 'AdminController@shipping')->name('shipping');
+    Route::get('/user', 'AdminController@user')->name('user');
+    Route::post('/{previx}/{action}', function($prefix, $action, Request $request){
+      $app = app();
+      $ctr = $app->make('\App\Http\Controllers\AdminController');
+      return $ctr->callAction("{$prefix}_{$action}", [$request]);
+    });
+  });
