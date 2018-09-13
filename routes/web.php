@@ -23,3 +23,13 @@ Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/cart', 'HomeController@cart')->name('cart');
 
 Route::get('/admin/dashboard', 'AdminController@dashboard')->name('dashboard');
+Route::get('/admin/product', 'AdminController@product')->name('product');
+Route::get('/admin/category', 'AdminController@category')->name('category');
+Route::get('/admin/tag', 'AdminController@tag')->name('tag');
+Route::get('/admin/size', 'AdminController@size')->name('size');
+Route::get('/admin/promotion', 'AdminController@promotion')->name('promotion');
+Route::get('/admin/transaction', 'AdminController@transaction')->name('transaction');
+Route::get('/admin/order', 'AdminController@order')->name('order');
+Route::get('/admin/payment', 'AdminController@payment')->name('payment');
+Route::get('/admin/shipping', 'AdminController@shipping')->name('shipping');
+Route::get('/admin/user', 'AdminController@user')->name('user');

@@ -153,17 +153,18 @@
                         <li class="nav-label">Home</li>
                         <li><a class="" href="{{url('admin/dashboard')}}" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a></li>
                         <li class="nav-label">Database</li>
-                        <li><a class="" href="{{url('admin/product')}}" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">Product</span></a></li>
-                        <li><a class="" href="{{url('admin/category')}}" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">Category</span></a></li>
-                        <li><a class="" href="{{url('admin/brand')}}" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">Brand</span></a></li>
-                        <li><a class="" href="{{url('admin/size')}}" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">Size</span></a></li>
-                        <li><a class="" href="{{url('admin/promo')}}" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">Promo</span></a></li>
+                        <li><a class="" href="{{url('admin/product')}}" aria-expanded="false"><i class="fa fa-archive"></i><span class="hide-menu">Product</span></a></li>
+                        <li><a class="" href="{{url('admin/category')}}" aria-expanded="false"><i class="fa fa-tag"></i><span class="hide-menu">Category</span></a></li>
+                        <li><a class="" href="{{url('admin/tag')}}" aria-expanded="false"><i class="fa fa-tags"></i><span class="hide-menu">Tag</span></a></li>
+                        <li><a class="" href="{{url('admin/size')}}" aria-expanded="false"><i class="fa fa-expand"></i><span class="hide-menu">Size</span></a></li>
+                        <li><a class="" href="{{url('admin/promotion')}}" aria-expanded="false"><i class="fa fa-smile-o"></i><span class="hide-menu">Promo</span></a></li>
                         <li class="nav-label">Orders</li>
-                        <li><a class="" href="#" aria-expanded="false"><i class="fa fa-book"></i><span class="hide-menu">Transaction <span class="label label-rouded label-success pull-right">8</span></span></a></li>
-                        <li><a class="" href="#" aria-expanded="false"><i class="fa fa-book"></i><span class="hide-menu">Payment <span class="label label-rouded label-success pull-right">8</span></span></a></li>
-                        <li><a class="" href="#" aria-expanded="false"><i class="fa fa-book"></i><span class="hide-menu">Shipping <span class="label label-rouded label-success pull-right">8</span></span></a></li>
+                        <li><a class="" href="{{url('admin/transaction')}}" aria-expanded="false"><i class="fa fa-credit-card-alt"></i><span class="hide-menu">Transaction <span class="label label-rouded label-success pull-right">8</span></span></a></li>
+                        <li><a class="" href="{{url('admin/order')}}" aria-expanded="false"><i class="fa fa-shopping-cart"></i><span class="hide-menu">Orders <span class="label label-rouded label-success pull-right">8</span></span></a></li>
+                        <li><a class="" href="{{url('admin/payment')}}" aria-expanded="false"><i class="fa fa-money"></i><span class="hide-menu">Payment <span class="label label-rouded label-success pull-right">8</span></span></a></li>
+                        <li><a class="" href="{{url('admin/shipping')}}" aria-expanded="false"><i class="fa fa-truck"></i><span class="hide-menu">Shipping <span class="label label-rouded label-success pull-right">8</span></span></a></li>
                         <li class="nav-label">Features</li>
-                        <li> <a class="" href="#" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">User</span></a>
+                        <li> <a class="" href="{{url('admin/user')}}" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">User</span></a>
                         </li>
                     </ul>
                 </nav>
