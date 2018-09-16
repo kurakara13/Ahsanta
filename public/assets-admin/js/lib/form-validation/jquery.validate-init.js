@@ -19,6 +19,14 @@ var form_validation = function() {
                         required: !0,
                         minlength: 3
                     },
+                    "val-product-name": {
+                        required: !0,
+                        minlength: 6
+                    },
+                    "val-detail": {
+                        required: !0,
+                        minlength: 3
+                    },
                     "val-email": {
                         required: !0,
                         email: !0
@@ -76,6 +84,14 @@ var form_validation = function() {
                 messages: {
                     "val-username": {
                         required: "Please enter a username",
+                        minlength: "Your username must consist of at least 3 characters"
+                    },
+                    "val-product-name": {
+                        required: "Please enter a product name",
+                        minlength: "Your product name must consist of at least 6 characters"
+                    },
+                    "val-detail": {
+                        required: "Please enter a detail",
                         minlength: "Your username must consist of at least 3 characters"
                     },
                     "val-email": "Please enter a valid email address",

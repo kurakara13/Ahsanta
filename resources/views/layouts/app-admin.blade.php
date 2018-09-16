@@ -16,10 +16,11 @@
     @yield('css-lessstyle')
     <!-- Custom CSS -->
     <link href="{{asset('assets-admin/css/helper.css')}}" rel="stylesheet">
-    <link href="{{asset('assets-admin/css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('assets-admin/css/style.css?v=1')}}" rel="stylesheet">
 
     <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 
+    @yield('css-afterstyle')
     <style>
     .sidebar-nav > ul > li > a .label {
         position: static;
@@ -173,6 +174,7 @@
                         <li><a class="" href="{{url('admin/category')}}" aria-expanded="false"><i class="fa fa-tag"></i><span class="hide-menu">Category</span></a></li>
                         <li><a class="" href="{{url('admin/tag')}}" aria-expanded="false"><i class="fa fa-tags"></i><span class="hide-menu">Tag</span></a></li>
                         <li><a class="" href="{{url('admin/size')}}" aria-expanded="false"><i class="fa fa-expand"></i><span class="hide-menu">Size</span></a></li>
+                        <li><a class="" href="{{url('admin/color')}}" aria-expanded="false"><i class="fa fa-paint-brush"></i><span class="hide-menu">Color</span></a></li>
                         <li><a class="" href="{{url('admin/promotion')}}" aria-expanded="false"><i class="fa fa-smile-o"></i><span class="hide-menu">Promo</span></a></li>
                         <li class="nav-label">Orders</li>
                         <li><a class="" href="{{url('admin/transaction')}}" aria-expanded="false"><i class="fa fa-credit-card-alt"></i><span class="hide-menu">Transaction <span class="label label-rouded label-success pull-right">8</span></span></a></li>

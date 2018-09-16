@@ -1,5 +1,9 @@
 @extends('layouts.app-admin')
 
+@section('css-lessstyle')
+<link rel="stylesheet" href="{{asset('js/lib/iziModal-master/css/iziModal.min.css')}}">
+@stop
+
 @section('content')
 <!-- Bread crumb -->
 <div class="row page-titles">
@@ -19,55 +23,133 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Data Product</h4>
-                    <div class="table-responsive m-t-40">
-                        <table id="myTable" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Shad Decker</td>
-                                    <td>Regional Director</td>
-                                    <td>Edinburgh</td>
-                                    <td>51</td>
-                                    <td>2008/11/13</td>
-                                    <td>$183,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Michael Bruce</td>
-                                    <td>Javascript Developer</td>
-                                    <td>Singapore</td>
-                                    <td>29</td>
-                                    <td>2011/06/27</td>
-                                    <td>$183,000</td>
-                                </tr>
-                                <tr>
-                                    <td>Donna Snider</td>
-                                    <td>Customer Support</td>
-                                    <td>New York</td>
-                                    <td>27</td>
-                                    <td>2011/01/25</td>
-                                    <td>$112,000</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+              <div class="card-title">
+                  <h4>Table Product </h4>
+
+              </div>
+              <div class="button-action">
+                <ul class="list-inline">
+                  <li class="list-inline-item"><a href="{{url('admin/product/add')}}"><button class="btn btn-primary">Create Product</button></a></li>
+                </ul>
+              </div>
+              <div class="card-body" style="margin-left:20px;margin-right:20px;">
+                <div class="table-responsive m-t-40">
+                    <table id="myTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width:80px">No</th>
+                                <th>Promotion Name</th>
+                                <th>Min Order</th>
+                                <th>Min Price</th>
+                                <th class="text-center">Type</th>
+                                <th>Ammount</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center" style="width:150px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($promotion as $key=>$value)
+                            <tr>
+                                <td class="text-center">{{++$key}}</td>
+                                <td>{{$value->name}}</td>
+                                <td class="text-center">{{$value->minimum_order}}</td>
+                                <td>IDR {{$value->minimum_price}}</td>
+                                <td>{{strtoupper($value->type)}}</td>
+                                <td>
+                                  @if($value->type == 'percent')
+                                    {{$value->ammount}} %
+                                  @elseif($value->type == 'get item')
+                                    {{$value->ammount}} Item
+                                  @elseif($value->type == 'price')
+                                    IDR {{$value->ammount}}
+                                  @endif
+                                </td>
+                                <td class="text-center">{{strtoupper($value->status)}}</td>
+                                <td class="text-center">
+                                  <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                      <button class="btn btn-success trigger" data-iziModal-open="#modal-edit" onclick="edit({{$value->id}},{{$value->minimum_order}},'{{$value->minimum_price}}',{{$value->ammount}},'{{$value->type}}','{{$value->name}}','{{$value->status}}')">
+                                        <i class="fa fa-edit"></i>
+                                      </button>
+                                    </li>
+                                    <li class="list-inline-item">
+                                      <form method="post" action="{{url('admin/promotion/delete')}}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="id" value="{{$value->id}}">
+                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                      </form>
+                                    </li>
+                                  </ul>
+                                </td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                    </table>
                 </div>
+              </div>
             </div>
         </div>
     </div>
     <!-- End PAge Content -->
 </div>
 <!-- End Container fluid  -->
+<!-- modal -->
+
+@stop
+
+@section('script-lesscustom')
+<script src="{{asset('js/lib/iziModal-master/js/iziModal.min.js')}}" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+  $(".iziModal").iziModal({
+   width: 700,
+   radius: 5,
+   padding: 20,
+   loop: true
+ });
+
+ $(".type-change").change(function(){
+   var type = $(this).val();
+   if(type == "get item"){
+     $(".icon-item").removeClass('hidden');
+     $(".icon-idr").addClass('hidden');
+     $(".icon-percent").addClass('hidden');
+   }else if (type == "price") {
+     $(".icon-item").addClass('hidden');
+     $(".icon-idr").removeClass('hidden');
+     $(".icon-percent").addClass('hidden');
+   }else if (type == "percent") {
+     $(".icon-item").addClass('hidden');
+     $(".icon-idr").addClass('hidden');
+     $(".icon-percent").removeClass('hidden');
+   }
+ });
+});
+
+function edit(id,minimum_order,minimum_price,ammount,type,name,status){
+  $("#name").val(name);
+  $("#minimum_order").val(minimum_order);
+  $("#minimum_price").val(minimum_price);
+  $("#ammount").val(ammount);
+  $("#type-create-edit").val(type);
+  $("#status").val(status);
+  $("#id").val(id);
+
+  if(type == "get item"){
+    $(".icon-item").removeClass('hidden');
+    $(".icon-idr").addClass('hidden');
+    $(".icon-percent").addClass('hidden');
+  }else if (type == "price") {
+    $(".icon-item").addClass('hidden');
+    $(".icon-idr").removeClass('hidden');
+    $(".icon-percent").addClass('hidden');
+  }else if (type == "percent") {
+    $(".icon-item").addClass('hidden');
+    $(".icon-idr").addClass('hidden');
+    $(".icon-percent").removeClass('hidden');
+  }
+}
+</script>
 @stop
 
 @section('script-aftercustom')

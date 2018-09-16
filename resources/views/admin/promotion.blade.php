@@ -4,6 +4,34 @@
 <link rel="stylesheet" href="{{asset('js/lib/iziModal-master/css/iziModal.min.css')}}">
 @stop
 
+@section('css-afterstyle')
+<style>
+.icon-item{
+  width: auto;
+  background: #c2c2c29e;
+  color: white;
+  font-size: 21px;
+  padding-left: 10px;
+  padding-right: 5px;
+  padding-top: 5px;
+  font-style: bold;
+}
+
+.left-icon{
+  border-radius: 5px 0px 0px 5px;
+}
+
+.right-icon{
+  border-radius: 0px 5px 5px 0px;
+}
+
+.input-icon{
+  display: -webkit-box;
+    width: 100%;
+}
+</style>
+@stop
+
 @section('content')
 <!-- Bread crumb -->
 <div class="row page-titles">
@@ -114,7 +142,7 @@
           <div class="col-sm-6">
             <div class="form-group">
               <label>Type</label>
-              <select name="type" class="form-control" required>
+              <select name="type" class="form-control type-change" id="type-create" required>
                 <option value="">-Type Promotion-</option>
                 <option value="get item">Get Item</option>
                 <option value="percent">Percent</option>
@@ -125,7 +153,12 @@
           <div class="col-sm-6">
             <div class="form-group">
               <label>Ammount</label>
-              <input type="number" name="ammount" class="form-control" value="0" required>
+              <div class="input-icon">
+                <div class="icon-item left-icon icon-idr">IDR</div>
+                <input type="number" name="ammount" class="form-control" value="0" required style="width:auto">
+                <div class="icon-item right-icon hidden icon-percent">%</div>
+                <div class="icon-item right-icon hidden icon-item">Item</div>
+              </div>
             </div>
           </div>
           <div class="col-sm-3">
@@ -163,22 +196,62 @@
 
   <div class="container">
     <div class="header-modal">
-      <label>Add Promotion</label>
+      <label>Edit Promotion</label>
     </div>
     <div class="modal-body">
       <form method="post" action="{{url('admin/promotion/edit')}}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="id" id="id">
         <div class="row">
-          <div class="col-sm-8">
-            <input type="text" name="name" id="name" class="form-control" placeholder="Promotion Name">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label>Promotion Name</label>
+              <input type="text" name="name" id="name" class="form-control" required>
+            </div>
           </div>
-          <div class="col-sm-4">
-            <select name="status" class="form-control" id="status">
-              <option value="">-Status Promotion-</option>
-              <option value="active">Active</option>
-              <option value="non active">Non Active</option>
-            </select>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Type</label>
+              <select name="type" class="form-control type-change" id="type-create-edit" required>
+                <option value="">-Type Promotion-</option>
+                <option value="get item">Get Item</option>
+                <option value="percent">Percent</option>
+                <option value="price">Price</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Ammount</label>
+              <div class="input-icon">
+                <div class="icon-item left-icon icon-idr">IDR</div>
+                <input type="number" name="ammount" class="form-control" id="ammount" value="0" required style="width:auto">
+                <div class="icon-item right-icon hidden icon-percent">%</div>
+                <div class="icon-item right-icon hidden icon-item">Item</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label>Minimum Order</label>
+              <input type="number" name="minimum_order" id="minimum_order" class="form-control" value="0" required>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label>Minimum Price</label>
+              <input type="number" name="minimum_price" id="minimum_price" class="form-control" value="0" required>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>Status</label>
+              <select name="status" class="form-control" id="status" required>
+                <option value="">-Status Promotion-</option>
+                <option value="active">Active</option>
+                <option value="non active">Non Active</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="submit-btn">
@@ -201,12 +274,47 @@ $(document).ready(function(){
    padding: 20,
    loop: true
  });
+
+ $(".type-change").change(function(){
+   var type = $(this).val();
+   if(type == "get item"){
+     $(".icon-item").removeClass('hidden');
+     $(".icon-idr").addClass('hidden');
+     $(".icon-percent").addClass('hidden');
+   }else if (type == "price") {
+     $(".icon-item").addClass('hidden');
+     $(".icon-idr").removeClass('hidden');
+     $(".icon-percent").addClass('hidden');
+   }else if (type == "percent") {
+     $(".icon-item").addClass('hidden');
+     $(".icon-idr").addClass('hidden');
+     $(".icon-percent").removeClass('hidden');
+   }
+ });
 });
 
-function edit(id,name,status){
+function edit(id,minimum_order,minimum_price,ammount,type,name,status){
   $("#name").val(name);
+  $("#minimum_order").val(minimum_order);
+  $("#minimum_price").val(minimum_price);
+  $("#ammount").val(ammount);
+  $("#type-create-edit").val(type);
   $("#status").val(status);
   $("#id").val(id);
+
+  if(type == "get item"){
+    $(".icon-item").removeClass('hidden');
+    $(".icon-idr").addClass('hidden');
+    $(".icon-percent").addClass('hidden');
+  }else if (type == "price") {
+    $(".icon-item").addClass('hidden');
+    $(".icon-idr").removeClass('hidden');
+    $(".icon-percent").addClass('hidden');
+  }else if (type == "percent") {
+    $(".icon-item").addClass('hidden');
+    $(".icon-idr").addClass('hidden');
+    $(".icon-percent").removeClass('hidden');
+  }
 }
 </script>
 @stop

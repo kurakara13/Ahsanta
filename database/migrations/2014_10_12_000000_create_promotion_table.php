@@ -16,11 +16,11 @@ class CreatePromotionTable extends Migration
         Schema::create('promotion', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('minmum_order');
-            $table->string('minimum_price');
-            $table->string('ammount');
+            $table->integer('minimum_order')->default(0);
+            $table->string('minimum_price')->default('0');
+            $table->string('ammount')->default('0');
             $table->string('type');
-            $table->string('product_use');
+            $table->integer('product_use')->default(0);
             $table->string('status');
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Tags;
 use App\Sizes;
+use App\Colors;
 use App\Promotion;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -26,10 +27,34 @@ class AdminController extends Controller
       return view('admin.dashboard');
     }
 
+    // Begin Product
+
     public function product(){
 
-      return view('admin.product');
+      $promotion = Promotion::all();
+
+      return view('admin.product',['promotion' => $promotion]);
     }
+
+    public function product_add_form(){
+
+      $promotion = Promotion::where('status', 'active')->get();
+      $category = Category::where('status', 'active')->get();
+      $tag = Tags::where('status', 'active')->get();
+      $size = Sizes::where('status', 'active')->get();
+      $color = Colors::where('status', 'active')->get();
+
+      return view('admin.product-add',['promotion' => $promotion, 'category' => $category, 'tag' => $tag, 'size' => $size, 'color' => $color]);
+    }
+
+    public function product_add(Request $request){
+      dd($request);
+      $promotion = Promotion::all();
+
+      return view('admin.product',['promotion' => $promotion]);
+    }
+
+    // End Proudct
 
     // Begin Category
 
@@ -120,6 +145,53 @@ class AdminController extends Controller
 
     // End Tag
 
+    // Begin Color
+
+    public function color(){
+
+      $color = Colors::all();
+
+      return view('admin.color',['color' => $color]);
+    }
+
+    public function color_add($request){
+      // dd($request);
+
+      $color = new Colors;
+      $color->name = $request->name;
+      $color->status = $request->status;
+
+      $color->save();
+
+      alert()->success('Success Add New Color', 'Successfully');
+      return redirect('admin/color');
+    }
+
+    public function color_edit($request){
+      // dd($request);
+
+      $color = Colors::find($request->id);
+      $color->name = $request->name;
+      $color->status = $request->status;
+
+      $color->save();
+
+      alert()->success('Success Change Color', 'Successfully');
+      return redirect('admin/color');
+    }
+
+    public function color_delete($request){
+      // dd($request);
+
+      $color = Colors::find($request->id);
+      $color->delete();
+
+      alert()->success('Success Delete Color', 'Successfully');
+      return redirect('admin/color');
+    }
+
+    // End Color
+
     // Begin Size
 
     public function size(){
@@ -190,6 +262,36 @@ class AdminController extends Controller
       $promotion->save();
 
       alert()->success('Success Add New Promotion', 'Successfully');
+      return redirect('admin/promotion');
+    }
+
+    public function promotion_edit($request){
+      // dd($request);
+
+      $promotion = Promotion::find($request->id);
+      $promotion->name = $request->name;
+      $promotion->type = $request->type;
+      $promotion->ammount = $request->ammount;
+      $promotion->minimum_order = $request->minimum_order;
+      $promotion->minimum_price = $request->minimum_price;
+      $promotion->status = $request->status;
+
+      $promotion->save();
+
+      alert()->success('Success Change Promotion', 'Successfully');
+      return redirect('admin/promotion');
+    }
+
+    public function promotion_delete($request){
+
+      $promotion = Promotion::find($request->id);
+      if($promotion->product_use != 0){
+        alert()->warning('Promotion Contain '.$promotion->product_use.' Product', 'Warning');
+      }else {
+        $promotion->delete();
+        alert()->success('Success Delete Promotion', 'Successfully');
+      }
+
       return redirect('admin/promotion');
     }
 
