@@ -8,6 +8,7 @@ use App\Tags;
 use App\Sizes;
 use App\Colors;
 use App\Promotion;
+use App\ProductImages;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
@@ -48,10 +49,24 @@ class AdminController extends Controller
     }
 
     public function product_add(Request $request){
-      dd($request);
-      $promotion = Promotion::all();
+      if($request->userprofile_picture != null){
+        $imageCount = count($request->userprofile_picture);
+        for ($i=0; $i < $imageCount; $i++) {
+          $filename = time().$i.$request->userprofile_picture[$i]->getClientOriginalName();
+          $request->userprofile_picture[$i]->move(public_path('images/product/'), $filename);
 
-      return view('admin.product',['promotion' => $promotion]);
+          $productImages = new ProductImages;
+          $productImages->id_product = 1;
+          $productImages->name = $filename;
+          $productImages->status = 'Show';
+
+          $productImages->save();
+
+        }
+        dd($filename);
+      }
+      // alert()->success('Success Add New Product', 'Successfully');
+      // return redirect('admin/product');
     }
 
     // End Proudct

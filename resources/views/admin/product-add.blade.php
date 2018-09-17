@@ -174,7 +174,7 @@ input:checked + .slider:before {
             </div>
             <div class="card-body">
               <div class="form-validation">
-                <form action="{{url('admin/product/add')}}" method="post" class="form-valide" style="margin:20px">
+                <form action="{{url('admin/product/add')}}" method="post" class="form-valide" enctype="multipart/form-data" style="margin:20px">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-body" id="form-body-product">
                         <h3 class="card-title m-t-15">Product Info</h3>
@@ -239,7 +239,7 @@ input:checked + .slider:before {
                                       <label class="control-label">Category</label>
                                       <select class="js-example-basic-multiple form-control" name="category[]" multiple="multiple">
                                         @foreach($category as $key)
-                                          <option value="{{$key->id}}">{{$key->name}}</option>
+                                          <option value="{{$key->name}}">{{$key->name}}</option>
                                         @endforeach
                                       </select>
                                     </div>
@@ -252,7 +252,7 @@ input:checked + .slider:before {
                                       <label class="control-label">Tags</label>
                                       <select class="js-example-basic-multiple form-control" name="tags[]" multiple="multiple">
                                         @foreach($tag as $key)
-                                          <option value="{{$key->id}}">{{$key->name}}</option>
+                                          <option value="{{$key->name}}">{{$key->name}}</option>
                                         @endforeach
                                       </select>
                                     </div>
@@ -289,7 +289,7 @@ input:checked + .slider:before {
                                           <div class="col-sm-2">
                                             <label class="control-label" for="val-detail">{{$key->name}}</label>
                                             <label class="switch">
-                                              <input type="checkbox color-input" value="{{$key->name}}" name="color[]">
+                                              <input type="checkbox" class="color-input" value="{{$key->name}}" name="color[]">
                                               <span class="slider round"></span>
                                             </label>
                                           </div>
@@ -325,7 +325,7 @@ input:checked + .slider:before {
                                           <div class="col-sm-2">
                                             <label class="control-label" for="val-detail">{{$key->name}}</label>
                                             <label class="switch">
-                                              <input type="checkbox size-input" name="size[]" value="{{$key->name}}">
+                                              <input type="checkbox" class="size-input" name="size[]" value="{{$key->name}}">
                                               <span class="slider round"></span>
                                             </label>
                                           </div>
