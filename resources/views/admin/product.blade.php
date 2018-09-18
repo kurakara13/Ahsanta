@@ -4,6 +4,20 @@
 <link rel="stylesheet" href="{{asset('js/lib/iziModal-master/css/iziModal.min.css')}}">
 @stop
 
+@section('css-afterstyle')
+<style>
+.input-image{
+  background: none;
+border: none;
+padding: 0px;
+outline: none!important;
+text-decoration: none!important;
+color: #99abb4;
+transition: all 0.2s ease 0s;
+}
+</style>
+@stop
+
 @section('content')
 <!-- Bread crumb -->
 <div class="row page-titles">
@@ -38,48 +52,38 @@
                         <thead>
                             <tr>
                                 <th class="text-center" style="width:80px">No</th>
-                                <th>Promotion Name</th>
-                                <th>Min Order</th>
-                                <th>Min Price</th>
-                                <th class="text-center">Type</th>
-                                <th>Ammount</th>
+                                <th style="width:180px">Product Name</th>
+                                <th>Price</th>
+                                <th>Promotion</th>
+                                <th>Stock</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center" style="width:150px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                          @foreach($promotion as $key=>$value)
+                          @foreach($product as $key=>$value)
                             <tr>
                                 <td class="text-center">{{++$key}}</td>
                                 <td>{{$value->name}}</td>
-                                <td class="text-center">{{$value->minimum_order}}</td>
-                                <td>IDR {{$value->minimum_price}}</td>
-                                <td>{{strtoupper($value->type)}}</td>
-                                <td>
-                                  @if($value->type == 'percent')
-                                    {{$value->ammount}} %
-                                  @elseif($value->type == 'get item')
-                                    {{$value->ammount}} Item
-                                  @elseif($value->type == 'price')
-                                    IDR {{$value->ammount}}
-                                  @endif
-                                </td>
+                                <td>Rp. {{$value->price}}</td>
+                                @if($value->id_promotion == null)
+                                <td>No Promotion</td>
+                                @else
+                                @endif
+                                <td class="text-center">{{$value->stock}}</td>
                                 <td class="text-center">{{strtoupper($value->status)}}</td>
                                 <td class="text-center">
-                                  <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                      <button class="btn btn-success trigger" data-iziModal-open="#modal-edit" onclick="edit({{$value->id}},{{$value->minimum_order}},'{{$value->minimum_price}}',{{$value->ammount}},'{{$value->type}}','{{$value->name}}','{{$value->status}}')">
-                                        <i class="fa fa-edit"></i>
-                                      </button>
-                                    </li>
-                                    <li class="list-inline-item">
-                                      <form method="post" action="{{url('admin/promotion/delete')}}">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" name="id" value="{{$value->id}}">
-                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                      </form>
-                                    </li>
-                                  </ul>
+                                  <div class="dropdown">
+                                    <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Action
+                											<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <li><a href="#">Detail</a></li>
+                                        <li><a href="#">Edit</a></li>
+                                        <li><a href="{{url('admin/product/edit/image/'.$value->id)}}">Image</a></li>
+                                        <li><a href="#">Delete</a></li>
+                                    </ul>
+                                  </div>
                                 </td>
                             </tr>
                           @endforeach

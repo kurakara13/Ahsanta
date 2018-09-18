@@ -8,6 +8,7 @@ use App\Tags;
 use App\Sizes;
 use App\Colors;
 use App\Promotion;
+use App\Product;
 use App\ProductImages;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -32,9 +33,9 @@ class AdminController extends Controller
 
     public function product(){
 
-      $promotion = Promotion::all();
+      $product = Product::all();
 
-      return view('admin.product',['promotion' => $promotion]);
+      return view('admin.product',['product' => $product]);
     }
 
     public function product_add_form(){
@@ -49,6 +50,25 @@ class AdminController extends Controller
     }
 
     public function product_add(Request $request){
+      if($request->promo == "null"){
+        $promo = null;
+      }else {
+        $promo = $request->promo;
+      }
+      $product = new Product;
+      $product->name = $request->name;
+      $product->price = $request->price;
+      $product->id_promotion = $promo;
+      $product->weight = $request->weight;
+      $product->stock = $request->stok;
+      $product->color = json_encode($request->color);
+      $product->size = json_encode($request->size);
+      $product->description = $request->description;
+      $product->status = "Show";
+
+      $product->save();
+      // dd($promo);
+
       if($request->userprofile_picture != null){
         $imageCount = count($request->userprofile_picture);
         for ($i=0; $i < $imageCount; $i++) {
@@ -56,17 +76,66 @@ class AdminController extends Controller
           $request->userprofile_picture[$i]->move(public_path('images/product/'), $filename);
 
           $productImages = new ProductImages;
-          $productImages->id_product = 1;
+          $productImages->id_product = $product->id;
           $productImages->name = $filename;
           $productImages->status = 'Show';
 
           $productImages->save();
 
         }
-        dd($filename);
       }
-      // alert()->success('Success Add New Product', 'Successfully');
-      // return redirect('admin/product');
+
+      alert()->success('Success Add New Product', 'Successfully');
+      return redirect('admin/product');
+    }
+
+    public function product_edit_image($id){
+      // dd($request);
+      $productImages = ProductImages::where('id_product', $id)->get();
+
+      return view('admin.product-image',['productImages' => $productImages]);
+    }
+
+    public function product_imageEdit(Request $request){
+
+      // dd($request);
+      $productImages = ProductImages::find($request->id);
+
+      if($request->userprofile_picture != null){
+      $i = substr($request->img_change,10,1);
+      unlink(public_path('images\product\\'.$request->img_change));
+      $filename = time().$i.$request->userprofile_picture->getClientOriginalName();
+      $request->userprofile_picture->move(public_path('images/product/'), $filename);
+
+      $productImages->name = $filename;
+      }
+      $productImages->status = $request->status;
+
+      $productImages->save();
+
+      alert()->success('Success Change Image', 'Successfully');
+      return redirect('admin/product/edit/image/'.$request->id_product);
+    }
+
+    public function product_cover(Request $request){
+
+      $productImagesData = ProductImages::where('id_product', $request->id_product)->get();
+      // dd($productImagesData);
+
+
+      foreach ($productImagesData as $key) {
+        $productImages = ProductImages::find($key->id);
+
+        if($key->id == $request->id){
+          $productImages->cover = 1;
+        }else {
+          $productImages->cover = 0;
+        }
+        $productImages->save();
+      }
+
+      Alert::success('Success Change Product Image Cover', 'Success Message');
+      return redirect('admin/product/edit/image/'.$request->id_product);
     }
 
     // End Proudct

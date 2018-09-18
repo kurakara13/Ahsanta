@@ -32,6 +32,7 @@ Route::prefix('admin')->group(function() {
     Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
     Route::get('/product', 'AdminController@product')->name('product');
     Route::get('/product/add', 'AdminController@product_add_form')->name('product.add.form');
+    Route::get('/product/edit/image/{id}', 'AdminController@product_edit_image')->name('product.edit.img');
     Route::get('/category', 'AdminController@category')->name('category');
     Route::get('/tag', 'AdminController@tag')->name('tag');
     Route::get('/size', 'AdminController@size')->name('size');

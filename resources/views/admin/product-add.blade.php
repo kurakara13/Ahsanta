@@ -146,6 +146,17 @@ input:checked + .slider:before {
 .btn-remove{
   margin-left: 20px;
 }
+
+.select2-container--default .select2-selection--multiple {
+    /* background-color: white; */
+    border: 1px solid #aaa;
+    /* border-radius: 4px; */
+    cursor: text;
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #e7e7e7;
+    font-family: 'Poppins', sans-serif;
+}
 </style>
 @stop
 
@@ -184,9 +195,9 @@ input:checked + .slider:before {
                             <div class="row p-t-20">
                                 <div class="col-md-12">
                                   <div class="form-group" style="display:block">
-                                      <label class="control-label" for="val-product-name">Product Name <span class="text-danger">*</span></label>
+                                      <label class="control-label" for="name">Product Name <span class="text-danger">*</span></label>
                                       <div class="input-validat">
-                                        <input type="text" class="form-control" id="val-product-name" name="val-product-name" placeholder="Enter a product name..">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter a product name.." required>
                                       </div>
                                   </div>
                                 </div>
@@ -194,18 +205,19 @@ input:checked + .slider:before {
                             <div class="row">
                               <div class="col-md-6">
                                 <div class="form-group" style="display:block">
-                                    <label class="control-label" for="val-price">Price <span class="text-danger">*</span></label>
+                                    <label class="control-label" for="price">Price <span class="text-danger">*</span></label>
                                     <div class="input-validat">
-                                      <input type="text" class="form-control" id="val-price" name="val-price">
+                                      <input type="text" class="form-control" id="price" name="price" required>
                                     </div>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group" style="display:block">
-                                    <label class="control-label" for="val-promo">Promotion <span class="text-danger">*</span></label>
+                                    <label class="control-label" for="promo">Promotion <span class="text-danger">*</span></label>
                                     <div class="input-validat">
-                                      <select class="form-control" id="val-promo" name="val-promo">
+                                      <select class="form-control" id="promo" name="promo" required>
                                         <option value="">-Select Promotion-</option>
+                                        <option value="null">No Promotion</option>
                                         @foreach($promotion as $key)
                                           <option value="{{$key->id}}">{{$key->name}}</option>
                                         @endforeach
@@ -217,17 +229,17 @@ input:checked + .slider:before {
                             <div class="row">
                               <div class="col-md-6">
                                 <div class="form-group" style="display:block">
-                                    <label class="control-label" for="val-weight">Weight <span class="text-danger">*</span></label>
+                                    <label class="control-label" for="weight">Weight <span class="text-danger">*</span></label>
                                     <div class="input-validat">
-                                      <input type="text" class="form-control" id="val-weight" name="val-weight">
+                                      <input type="text" class="form-control" id="weight" name="weight">
                                     </div>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group" style="display:block">
-                                    <label class="control-label" for="val-stok">Stok <span class="text-danger">*</span></label>
+                                    <label class="control-label" for="stok">Stok <span class="text-danger">*</span></label>
                                     <div class="input-validat">
-                                      <input type="text" class="form-control" id="val-stok" name="val-stok">
+                                      <input type="text" class="form-control" id="stok" name="stok">
                                     </div>
                                 </div>
                               </div>
@@ -264,19 +276,19 @@ input:checked + .slider:before {
                             <div class="row p-t-20">
                                 <div class="col-md-12">
                                   <div class="form-group" style="display:block">
-                                      <label class="control-label" for="val-detail">Product Color <span class="text-danger">*</span></label>
+                                      <label class="control-label" for="color">Product Color <span class="text-danger">*</span></label>
                                       <hr>
                                       <div class="input-validat">
                                         <div class="row">
                                           <div class="col-sm-3">
-                                            <label class="control-label" for="val-detail">All Color</label>
+                                            <label class="control-label" for="all-color">All Color</label>
                                             <label class="switch">
                                               <input type="checkbox">
                                               <span class="slider round"></span>
                                             </label>
                                           </div>
                                           <div class="col-sm-3">
-                                            <label class="control-label" for="val-detail">No Color</label>
+                                            <label class="control-label" for="no-color">No Color</label>
                                             <label class="switch">
                                               <input type="checkbox">
                                               <span class="slider round"></span>
@@ -287,7 +299,7 @@ input:checked + .slider:before {
                                         <div class="row">
                                           @foreach($color as $key)
                                           <div class="col-sm-2">
-                                            <label class="control-label" for="val-detail">{{$key->name}}</label>
+                                            <label class="control-label" for="color">{{$key->name}}</label>
                                             <label class="switch">
                                               <input type="checkbox" class="color-input" value="{{$key->name}}" name="color[]">
                                               <span class="slider round"></span>
@@ -300,19 +312,19 @@ input:checked + .slider:before {
                                 </div>
                                 <div class="col-md-12">
                                   <div class="form-group" style="display:block">
-                                      <label class="control-label" for="val-detail">Product Size <span class="text-danger">*</span></label>
+                                      <label class="control-label" for="size">Product Size <span class="text-danger">*</span></label>
                                       <hr>
                                       <div class="input-validat">
                                         <div class="row">
                                           <div class="col-sm-3">
-                                            <label class="control-label" for="val-detail">All Size</label>
+                                            <label class="control-label" for="all-size">All Size</label>
                                             <label class="switch">
                                               <input type="checkbox">
                                               <span class="slider round"></span>
                                             </label>
                                           </div>
                                           <div class="col-sm-3">
-                                            <label class="control-label" for="val-detail">No Size</label>
+                                            <label class="control-label" for="no-size">No Size</label>
                                             <label class="switch">
                                               <input type="checkbox" name="size[]" value="nosize">
                                               <span class="slider round"></span>
@@ -323,7 +335,7 @@ input:checked + .slider:before {
                                         <div class="row">
                                           @foreach($size as $key)
                                           <div class="col-sm-2">
-                                            <label class="control-label" for="val-detail">{{$key->name}}</label>
+                                            <label class="control-label" for="size">{{$key->name}}</label>
                                             <label class="switch">
                                               <input type="checkbox" class="size-input" name="size[]" value="{{$key->name}}">
                                               <span class="slider round"></span>
@@ -364,7 +376,7 @@ input:checked + .slider:before {
                           <hr>
                           <div class="row">
                             <div class="col-md-12 ">
-                              <textarea id="textarea-froala" style="min-height:300px"></textarea>
+                              <textarea id="textarea-froala" name="description" style="min-height:300px"></textarea>
                             </div>
                           </div>
                         </div>
