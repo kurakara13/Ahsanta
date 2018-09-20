@@ -143,9 +143,18 @@
 							</div>
 							@endif
 							<?php
-								$image = DB::table('product_image')->where('id_product', $key->id)->where('status', 'Show')->first();
+								$image = DB::table('product_image')->where('id_product', $key->id)->where('status', 'Show')->where('cover',1)->first();
+								if($image == null){
+									$image = DB::table('product_image')->where('id_product', $key->id)->where('status', 'Show')->first();
+								}
+
+								if($image == null){
+									$imageName = 'No_Image_Available.jpg';
+								}else {
+									$imageName = $image->name;
+								}
 							 ?>
-              <img src="{{asset('images/product/'.$image->name)}}" alt="IMG-PRODUCT" height="300px">
+              <img src="{{asset('images/product/'.$imageName)}}" alt="IMG-PRODUCT" height="300px">
 
               <div class="block2-overlay trans-0-4">
                 <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -163,7 +172,7 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="{{asset('assets/product-detail.html')}}" class="block2-name dis-block s-text3 p-b-5">
+              <a href="{{asset('assets/product-detail.html')}}" class="block2-name dis-block s-text3 p-b-5" style="min-height:48px;">
                 {{$key->name}}
               </a>
 
@@ -196,7 +205,7 @@
     <div class="row">
       <div class="col-sm-10 col-md-8 col-lg-6 m-l-r-auto p-t-15 p-b-15">
         <div class="hov-img-zoom pos-relative">
-          <img src="{{asset('assets/images/banner-08.jpg')}}" alt="IMG-BANNER">
+          <img src="{{asset('images/banner/banner2.jpg')}}" alt="IMG-BANNER" height="427px;">
 
           <div class="ab-t-l sizefull flex-col-c-m p-l-15 p-r-15">
             <span class="m-text9 p-t-45 fs-20-sm">
@@ -216,7 +225,7 @@
 
       <div class="col-sm-10 col-md-8 col-lg-6 m-l-r-auto p-t-15 p-b-15">
         <div class="bgwhite hov-img-zoom pos-relative p-b-20per-ssm">
-          <img src="{{asset('assets/images/shop-item-09.jpg')}}" alt="IMG-BANNER">
+          <img src="{{asset('assets/images/shop-item-09.jpg')}}" alt="IMG-BANNER" height="427px;">
 
           <div class="ab-t-l sizefull flex-col-c-b p-l-15 p-r-15 p-b-20">
             <div class="t-center">

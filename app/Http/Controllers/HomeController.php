@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $product = Product::where('status', 'Show')->get();
+        $product = Product::where('status', 'Show')->limit(15)->get();
         return view('home',['product' => $product]);
     }
 
