@@ -4,6 +4,36 @@
 
 @stop
 
+@section('menu')
+<!-- Menu -->
+<div class="wrap_menu">
+	<nav class="menu">
+		<ul class="main_menu">
+			<li>
+				<a href="{{asset('/')}}">Home</a>
+			</li>
+
+			<li>
+				<a href="{{asset('shop')}}">Shop</a>
+			</li>
+
+			<li class="sale-noti">
+				<a href="{{asset('blog')}}">Blog</a>
+			</li>
+
+			<li>
+				<a href="{{asset('about')}}">About</a>
+			</li>
+
+			<li>
+				<a href="{{asset('contact')}}">Contact</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+@stop
+
 @section('content')
 <!-- Title Page -->
 <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url({{asset('assets/images/heading-pages-05.jpg')}});">

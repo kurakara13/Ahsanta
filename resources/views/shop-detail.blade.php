@@ -4,26 +4,100 @@
 
 @stop
 
+@section('style')
+<style>
+.blck-promo{
+  background: #ffb100;
+  z-index: 100;
+  font-family: Montserrat-Regular;
+  font-size: 12px;
+  color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 22px;
+  border-radius: 11px;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.blck-new{
+  background: #00b8ff;
+  z-index: 100;
+  font-family: Montserrat-Regular;
+  font-size: 12px;
+  color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 22px;
+  border-radius: 11px;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+</style>
+@stop
+
+@section('menu')
+<!-- Menu -->
+<div class="wrap_menu">
+	<nav class="menu">
+		<ul class="main_menu">
+			<li>
+				<a href="{{asset('/')}}">Home</a>
+			</li>
+
+			<li class="sale-noti">
+				<a href="{{asset('shop')}}">Shop</a>
+			</li>
+
+			<li>
+				<a href="{{asset('blog')}}">Blog</a>
+			</li>
+
+			<li>
+				<a href="{{asset('about')}}">About</a>
+			</li>
+
+			<li>
+				<a href="{{asset('contact')}}">Contact</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+@stop
+
+
 @section('content')
 <!-- breadcrumb -->
 <div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
-  <a href="index.html" class="s-text16">
+  <a href="{{url('/')}}" class="s-text16">
     Home
     <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
   </a>
 
+  @foreach (json_decode($product->size) as $key)
   <a href="product.html" class="s-text16">
-    Women
+    {{$key}}
     <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
   </a>
-
-  <a href="#" class="s-text16">
-    T-Shirt
-    <i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
-  </a>
+  @endforeach
 
   <span class="s-text17">
-    Boxy T-Shirt with Roll Sleeve Detail
+    {{$product->name}}
   </span>
 </div>
 
@@ -35,34 +109,24 @@
         <div class="wrap-slick3-dots"></div>
 
         <div class="slick3">
-          <div class="item-slick3" data-thumb="{{asset('assets/images/thumb-item-01.jpg')}}">
+          @foreach($productImages as $key)
+          <div class="item-slick3" data-thumb="{{asset('images/product/'.$key->name)}}">
             <div class="wrap-pic-w">
-              <img src="{{asset('assets/images/product-detail-01.jpg')}}" alt="IMG-PRODUCT">
+              <img src="{{asset('images/product/'.$key->name)}}" alt="IMG-PRODUCT">
             </div>
           </div>
-
-          <div class="item-slick3" data-thumb="{{asset('assets/images/thumb-item-02.jpg')}}">
-            <div class="wrap-pic-w">
-              <img src="{{asset('assets/images/product-detail-02.jpg')}}" alt="IMG-PRODUCT">
-            </div>
-          </div>
-
-          <div class="item-slick3" data-thumb="{{asset('assets/images/thumb-item-03.jpg')}}">
-            <div class="wrap-pic-w">
-              <img src="{{asset('assets/images/product-detail-03.jpg')}}" alt="IMG-PRODUCT">
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>
 
     <div class="w-size14 p-t-30 respon5">
       <h4 class="product-detail-name m-text16 p-b-13">
-        Boxy T-Shirt with Roll Sleeve Detail
+        {{$product->name}}
       </h4>
 
       <span class="m-text17">
-        $22
+        {{$product->percentPrice()}}
       </span>
 
       <p class="s-text8 p-t-10">
@@ -79,10 +143,9 @@
           <div class="rs2-select2 rs3-select2 bo4 of-hidden w-size16">
             <select class="selection-2" name="size">
               <option>Choose an option</option>
-              <option>Size S</option>
-              <option>Size M</option>
-              <option>Size L</option>
-              <option>Size XL</option>
+              @foreach (json_decode($product->size) as $key)
+              <option value="{{$key}}">{{$key}}</option>
+              @endforeach
             </select>
           </div>
         </div>
@@ -95,10 +158,9 @@
           <div class="rs2-select2 rs3-select2 bo4 of-hidden w-size16">
             <select class="selection-2" name="color">
               <option>Choose an option</option>
-              <option>Gray</option>
-              <option>Red</option>
-              <option>Black</option>
-              <option>Blue</option>
+              @foreach (json_decode($product->color) as $key)
+              <option value="{{$key}}">{{$key}}</option>
+              @endforeach
             </select>
           </div>
         </div>
@@ -141,9 +203,7 @@
         </h5>
 
         <div class="dropdown-content dis-none p-t-15 p-b-23">
-          <p class="s-text8">
-            Fusce ornare mi vel risus porttitor dignissim. Nunc eget risus at ipsum blandit ornare vel sed velit. Proin gravida arcu nisl, a dignissim mauris placerat
-          </p>
+            {!!$product->description!!}
         </div>
       </div>
 
@@ -191,45 +251,33 @@
     <!-- Slide2 -->
     <div class="wrap-slick2">
       <div class="slick2">
-
-        <div class="item-slick2 p-l-15 p-r-15">
-          <!-- Block2 -->
-          <div class="block2">
-            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-              <img src="{{asset('assets/images/item-02.jpg')}}" alt="IMG-PRODUCT">
-
-              <div class="block2-overlay trans-0-4">
-                <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                  <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                  <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                </a>
-
-                <div class="block2-btn-addcart w-size1 trans-0-4">
-                  <!-- Button -->
-                  <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                Herschel supply co 25l
-              </a>
-
-              <span class="block2-price m-text6 p-r-5">
-                $75.00
-              </span>
-            </div>
-          </div>
-        </div>
-
+        @foreach($productRelated as $key)
         <div class="item-slick2 p-l-15 p-r-15">
           <!-- Block2 -->
           <div class="block2">
             <div class="block2-img wrap-pic-w of-hidden pos-relative">
-              <img src="{{asset('assets/images/item-03.jpg')}}" alt="IMG-PRODUCT">
+							@if($key->id_promotion != null)
+							<div class="blck-promo">
+								Sale
+							</div>
+							@elseif(date("Y-m-d H:i:s") < $key->created_at->addDays(7))
+							<div class="blck-new">
+								New
+							</div>
+							@endif
+							<?php
+								$image = DB::table('product_image')->where('id_product', $key->id)->where('status', 'Show')->where('cover',1)->first();
+								if($image == null){
+									$image = DB::table('product_image')->where('id_product', $key->id)->where('status', 'Show')->first();
+								}
+
+								if($image == null){
+									$imageName = 'No_Image_Available.jpg';
+								}else {
+									$imageName = $image->name;
+								}
+							 ?>
+              <img src="{{asset('images/product/'.$imageName)}}" alt="IMG-PRODUCT" height="300px">
 
               <div class="block2-overlay trans-0-4">
                 <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -247,76 +295,11 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                Denim jacket blue
+              <a href="{{url('shop/detail/'.$key->id.substr(uniqid(),0,10))}}" class="block2-name dis-block s-text3 p-b-5" style="min-height:48px;">
+                {{$key->name}}
               </a>
 
-              <span class="block2-price m-text6 p-r-5">
-                $92.50
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="item-slick2 p-l-15 p-r-15">
-          <!-- Block2 -->
-          <div class="block2">
-            <div class="block2-img wrap-pic-w of-hidden pos-relative">
-              <img src="{{asset('assets/images/item-05.jpg')}}" alt="IMG-PRODUCT">
-
-              <div class="block2-overlay trans-0-4">
-                <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                  <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                  <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                </a>
-
-                <div class="block2-btn-addcart w-size1 trans-0-4">
-                  <!-- Button -->
-                  <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                Coach slim easton black
-              </a>
-
-              <span class="block2-price m-text6 p-r-5">
-                $165.90
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="item-slick2 p-l-15 p-r-15">
-          <!-- Block2 -->
-          <div class="block2">
-            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-              <img src="{{asset('assets/images/item-07.jpg')}}" alt="IMG-PRODUCT">
-
-              <div class="block2-overlay trans-0-4">
-                <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                  <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                  <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                </a>
-
-                <div class="block2-btn-addcart w-size1 trans-0-4">
-                  <!-- Button -->
-                  <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                Frayed denim shorts
-              </a>
-
+							@if($key->id_promotion != null)
               <span class="block2-oldprice m-text7 p-r-5">
                 $29.50
               </span>
@@ -324,145 +307,15 @@
               <span class="block2-newprice m-text8 p-r-5">
                 $15.90
               </span>
+							@else
+							<span class="block2-price p-r-5">
+							 {{$key->percentPrice()}}
+							</span>
+							@endif
             </div>
           </div>
         </div>
-
-        <div class="item-slick2 p-l-15 p-r-15">
-          <!-- Block2 -->
-          <div class="block2">
-            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-              <img src="{{asset('assets/images/item-02.jpg')}}" alt="IMG-PRODUCT">
-
-              <div class="block2-overlay trans-0-4">
-                <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                  <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                  <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                </a>
-
-                <div class="block2-btn-addcart w-size1 trans-0-4">
-                  <!-- Button -->
-                  <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                Herschel supply co 25l
-              </a>
-
-              <span class="block2-price m-text6 p-r-5">
-                $75.00
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="item-slick2 p-l-15 p-r-15">
-          <!-- Block2 -->
-          <div class="block2">
-            <div class="block2-img wrap-pic-w of-hidden pos-relative">
-              <img src="{{asset('assets/images/item-03.jpg')}}" alt="IMG-PRODUCT">
-
-              <div class="block2-overlay trans-0-4">
-                <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                  <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                  <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                </a>
-
-                <div class="block2-btn-addcart w-size1 trans-0-4">
-                  <!-- Button -->
-                  <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                Denim jacket blue
-              </a>
-
-              <span class="block2-price m-text6 p-r-5">
-                $92.50
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="item-slick2 p-l-15 p-r-15">
-          <!-- Block2 -->
-          <div class="block2">
-            <div class="block2-img wrap-pic-w of-hidden pos-relative">
-              <img src="{{asset('assets/images/item-05.jpg')}}" alt="IMG-PRODUCT">
-
-              <div class="block2-overlay trans-0-4">
-                <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                  <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                  <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                </a>
-
-                <div class="block2-btn-addcart w-size1 trans-0-4">
-                  <!-- Button -->
-                  <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                Coach slim easton black
-              </a>
-
-              <span class="block2-price m-text6 p-r-5">
-                $165.90
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="item-slick2 p-l-15 p-r-15">
-          <!-- Block2 -->
-          <div class="block2">
-            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-              <img src="{{asset('assets/images/item-07.jpg')}}" alt="IMG-PRODUCT">
-
-              <div class="block2-overlay trans-0-4">
-                <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                  <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                  <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                </a>
-
-                <div class="block2-btn-addcart w-size1 trans-0-4">
-                  <!-- Button -->
-                  <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="block2-txt p-t-20">
-              <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                Frayed denim shorts
-              </a>
-
-              <span class="block2-oldprice m-text7 p-r-5">
-                $29.50
-              </span>
-
-              <span class="block2-newprice m-text8 p-r-5">
-                $15.90
-              </span>
-            </div>
-          </div>
-        </div>
+				@endforeach
       </div>
     </div>
 

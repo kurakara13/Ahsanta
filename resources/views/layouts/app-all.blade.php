@@ -73,33 +73,8 @@
 					<img src="{{asset('assets/images/icons/logo.png')}}" alt="IMG-LOGO">
 				</a>
 
-				<!-- Menu -->
-				<div class="wrap_menu">
-					<nav class="menu">
-						<ul class="main_menu">
-							<li class="sale-noti">
-								<a href="{{asset('/')}}">Home</a>
-							</li>
-
-							<li>
-								<a href="{{asset('shop')}}">Shop</a>
-							</li>
-
-							<li>
-								<a href="{{asset('blog')}}">Blog</a>
-							</li>
-
-							<li>
-								<a href="{{asset('about')}}">About</a>
-							</li>
-
-							<li>
-								<a href="{{asset('contact')}}">Contact</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-
+				@yield('menu')
+				
 				<!-- Header Icon -->
 				<div class="header-icons">
 					<a href="#" class="header-wrapicon1 dis-block">

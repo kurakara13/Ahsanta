@@ -4,6 +4,36 @@
 
 @stop
 
+@section('menu')
+<!-- Menu -->
+<div class="wrap_menu">
+	<nav class="menu">
+		<ul class="main_menu">
+			<li>
+				<a href="{{asset('/')}}">Home</a>
+			</li>
+
+			<li>
+				<a href="{{asset('shop')}}">Shop</a>
+			</li>
+
+			<li class="sale-noti">
+				<a href="{{asset('blog')}}">Blog</a>
+			</li>
+
+			<li>
+				<a href="{{asset('about')}}">About</a>
+			</li>
+
+			<li>
+				<a href="{{asset('contact')}}">Contact</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+@stop
+
 @section('content')
 <!-- breadcrumb -->
 <div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">

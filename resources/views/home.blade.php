@@ -50,6 +50,36 @@
 	</style>
 @stop
 
+@section('menu')
+<!-- Menu -->
+<div class="wrap_menu">
+	<nav class="menu">
+		<ul class="main_menu">
+			<li class="sale-noti">
+				<a href="{{asset('/')}}">Home</a>
+			</li>
+
+			<li>
+				<a href="{{asset('shop')}}">Shop</a>
+			</li>
+
+			<li>
+				<a href="{{asset('blog')}}">Blog</a>
+			</li>
+
+			<li>
+				<a href="{{asset('about')}}">About</a>
+			</li>
+
+			<li>
+				<a href="{{asset('contact')}}">Contact</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+@stop
+
 @section('content')
 <!-- Slide1 -->
 <section class="slide1">
@@ -172,7 +202,7 @@
             </div>
 
             <div class="block2-txt p-t-20">
-              <a href="{{asset('assets/product-detail.html')}}" class="block2-name dis-block s-text3 p-b-5" style="min-height:48px;">
+              <a href="{{url('shop/detail/'.$key->id.substr(uniqid(),0,10))}}" class="block2-name dis-block s-text3 p-b-5" style="min-height:48px;">
                 {{$key->name}}
               </a>
 
@@ -186,7 +216,7 @@
               </span>
 							@else
 							<span class="block2-price p-r-5">
-								RP. {{$key->price}}
+							 {{$key->percentPrice()}}
 							</span>
 							@endif
             </div>

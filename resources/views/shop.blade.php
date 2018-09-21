@@ -5,9 +5,121 @@
   <link rel="stylesheet" type="text/css" href="{{asset('assets/vendor/noui/nouislider.min.css')}}">
 @stop
 
+@section('style')
+<style>
+li.tags-item {
+  float: left;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #00000024;
+  border-radius: 10px;
+  padding-top: 0px;
+  box-shadow: 1px 2px 5px 0px;
+  padding-bottom: 0px;
+}
+.blck-promo{
+  background: #ffb100;
+  z-index: 100;
+  font-family: Montserrat-Regular;
+  font-size: 12px;
+  color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 22px;
+  border-radius: 11px;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.blck-new{
+  background: #00b8ff;
+  z-index: 100;
+  font-family: Montserrat-Regular;
+  font-size: 12px;
+  color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 22px;
+  border-radius: 11px;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.page-link {
+    /* position: relative; */
+    /* display: block; */
+    padding: .5rem .75rem;
+    /* margin-left: -1px; */
+    /* line-height: 1.25; */
+    /* color: #007bff; */
+    /* background-color: #fff; */
+    /* border: 1px solid #ddd; */
+    font-family: Montserrat-Regular;
+    font-size: 13px;
+    color: #808080;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #eeeeee;
+    margin: 6px;
+}
+
+.page-item.active .page-link {
+    z-index: 2;
+    border-color: #222222;
+    background-color: #222222;
+    color: white;
+}
+</style>
+@stop
+
+@section('menu')
+<!-- Menu -->
+<div class="wrap_menu">
+	<nav class="menu">
+		<ul class="main_menu">
+			<li>
+				<a href="{{asset('/')}}">Home</a>
+			</li>
+
+			<li class="sale-noti">
+				<a href="{{asset('shop')}}">Shop</a>
+			</li>
+
+			<li>
+				<a href="{{asset('blog')}}">Blog</a>
+			</li>
+
+			<li>
+				<a href="{{asset('about')}}">About</a>
+			</li>
+
+			<li>
+				<a href="{{asset('contact')}}">Contact</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+@stop
+
 @section('content')
 <!-- Title Page -->
-<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url({{asset('assets/images/heading-pages-02.jpg')}});">
+<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url({{asset('images/banner/banner2.jpg')}});">
   <h2 class="l-text2 t-center">
     Women
   </h2>
@@ -35,29 +147,30 @@
               </a>
             </li>
 
+            @foreach($category as $key)
             <li class="p-t-4">
               <a href="#" class="s-text13">
-                Women
+                {{$key->name}}
               </a>
             </li>
+            @endforeach
 
-            <li class="p-t-4">
-              <a href="#" class="s-text13">
-                Men
-              </a>
-            </li>
+          </ul>
 
-            <li class="p-t-4">
-              <a href="#" class="s-text13">
-                Kids
-              </a>
-            </li>
+          <h4 class="m-text14 p-b-7">
+            Tags
+          </h4>
 
-            <li class="p-t-4">
+          <ul class="p-b-54">
+
+            @foreach($tags as $key)
+            <li class="tags-item">
               <a href="#" class="s-text13">
-                Accesories
+                {{$key->name}}
               </a>
             </li>
+            @endforeach
+
           </ul>
 
           <!--  -->
@@ -168,50 +281,43 @@
           </div>
 
           <span class="s-text8 p-t-5 p-b-5">
-            Showing 1–12 of 16 results
+            @if(isset($_GET['page']))
+            Showing {{($product->currentPage() * $product->perPage())-($product->perPage()-1)}}–{{$product->currentPage() * $product->perPage()}} of {{$product->total()}} results
+            @else
+            Showing 1–{{$product->perPage()}} of {{$product->total()}} results
+            @endif
           </span>
         </div>
 
         <!-- Product -->
         <div class="row">
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                <img src="{{asset('assets/images/item-02.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="{{url('shop/detail/A001')}}" class="block2-name dis-block s-text3 p-b-5">
-                  Herschel supply co 25l
-                </a>
-
-                <span class="block2-price m-text6 p-r-5">
-                  $75.00
-                </span>
-              </div>
-            </div>
-          </div>
-
+          @foreach($product as $key)
           <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
             <!-- Block2 -->
             <div class="block2">
               <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                <img src="{{asset('assets/images/item-03.jpg')}}" alt="IMG-PRODUCT">
+                @if($key->id_promotion != null)
+  							<div class="blck-promo">
+  								Sale
+  							</div>
+  							@elseif(date("Y-m-d H:i:s") < $key->created_at->addDays(7))
+  							<div class="blck-new">
+  								New
+  							</div>
+  							@endif
+  							<?php
+  								$image = DB::table('product_image')->where('id_product', $key->id)->where('status', 'Show')->where('cover',1)->first();
+  								if($image == null){
+  									$image = DB::table('product_image')->where('id_product', $key->id)->where('status', 'Show')->first();
+  								}
+
+  								if($image == null){
+  									$imageName = 'No_Image_Available.jpg';
+  								}else {
+  									$imageName = $image->name;
+  								}
+  							 ?>
+                <img src="{{asset('images/product/'.$imageName)}}" alt="IMG-PRODUCT" height="300px">
 
                 <div class="block2-overlay trans-0-4">
                   <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -229,76 +335,11 @@
               </div>
 
               <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Denim jacket blue
+                <a href="{{url('shop/detail/'.$key->id.substr(uniqid(),0,10))}}" class="block2-name dis-block s-text3 p-b-5" style="min-height:48px;">
+                  {{$key->name}}
                 </a>
 
-                <span class="block2-price m-text6 p-r-5">
-                  $92.50
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                <img src="{{asset('assets/images/item-05.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Coach slim easton black
-                </a>
-
-                <span class="block2-price m-text6 p-r-5">
-                  $165.90
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-                <img src="{{asset('assets/images/item-07.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Frayed denim shorts
-                </a>
-
+                @if($key->id_promotion != null)
                 <span class="block2-oldprice m-text7 p-r-5">
                   $29.50
                 </span>
@@ -306,284 +347,19 @@
                 <span class="block2-newprice m-text8 p-r-5">
                   $15.90
                 </span>
+  							@else
+  							<span class="block2-price p-r-5">
+  							 {{$key->percentPrice()}}
+  							</span>
+  							@endif
               </div>
             </div>
           </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                <img src="{{asset('assets/images/item-01.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Herschel supply co 25l
-                </a>
-
-                <span class="block2-price m-text6 p-r-5">
-                  $75.00
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                <img src="{{asset('assets/images/item-14.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Denim jacket blue
-                </a>
-
-                <span class="block2-price m-text6 p-r-5">
-                  $92.50
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                <img src="{{asset('assets/images/item-06.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Herschel supply co 25l
-                </a>
-
-                <span class="block2-price m-text6 p-r-5">
-                  $75.00
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                <img src="{{asset('assets/images/item-08.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Denim jacket blue
-                </a>
-
-                <span class="block2-price m-text6 p-r-5">
-                  $92.50
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                <img src="{{asset('assets/images/item-10.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Coach slim easton black
-                </a>
-
-                <span class="block2-price m-text6 p-r-5">
-                  $165.90
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-                <img src="{{asset('assets/images/item-11.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Frayed denim shorts
-                </a>
-
-                <span class="block2-oldprice m-text7 p-r-5">
-                  $29.50
-                </span>
-
-                <span class="block2-newprice m-text8 p-r-5">
-                  $15.90
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                <img src="{{asset('assets/images/item-12.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Herschel supply co 25l
-                </a>
-
-                <span class="block2-price m-text6 p-r-5">
-                  $75.00
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-img wrap-pic-w of-hidden pos-relative">
-                <img src="{{asset('assets/images/item-15.jpg')}}" alt="IMG-PRODUCT">
-
-                <div class="block2-overlay trans-0-4">
-                  <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                    <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                    <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                  </a>
-
-                  <div class="block2-btn-addcart w-size1 trans-0-4">
-                    <!-- Button -->
-                    <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="block2-txt p-t-20">
-                <a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                  Denim jacket blue
-                </a>
-
-                <span class="block2-price m-text6 p-r-5">
-                  $92.50
-                </span>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
 
         <!-- Pagination -->
-        <div class="pagination flex-m flex-w p-t-26">
-          <a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-          <a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
-        </div>
+        {{ $product->links() }}
       </div>
     </div>
   </div>
@@ -732,23 +508,23 @@
 
   <div class="t-center p-l-15 p-r-15">
     <a href="#">
-      <img class="h-size2" src="images/icons/paypal.png" alt="IMG-PAYPAL">
+      <img class="h-size2" src="{{asset('assets/images/icons/paypal.png')}}" alt="IMG-PAYPAL">
     </a>
 
     <a href="#">
-      <img class="h-size2" src="images/icons/visa.png" alt="IMG-VISA">
+      <img class="h-size2" src="{{asset('assets/images/icons/visa.png')}}" alt="IMG-VISA">
     </a>
 
     <a href="#">
-      <img class="h-size2" src="images/icons/mastercard.png" alt="IMG-MASTERCARD">
+      <img class="h-size2" src="{{asset('assets/images/icons/mastercard.png')}}" alt="IMG-MASTERCARD">
     </a>
 
     <a href="#">
-      <img class="h-size2" src="images/icons/express.png" alt="IMG-EXPRESS">
+      <img class="h-size2" src="{{asset('assets/images/icons/express.png')}}" alt="IMG-EXPRESS">
     </a>
 
     <a href="#">
-      <img class="h-size2" src="images/icons/discover.png" alt="IMG-DISCOVER">
+      <img class="h-size2" src="{{asset('assets/images/icons/discover.png')}}" alt="IMG-DISCOVER">
     </a>
 
     <div class="t-center s-text8 p-t-20">

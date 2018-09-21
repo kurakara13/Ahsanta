@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\ProductImages;
+use App\Category;
+use App\Tags;
 
 class HomeController extends Controller
 {
@@ -24,18 +27,32 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $product = Product::where('status', 'Show')->limit(15)->get();
+        $product = Product::where('status', 'Show')->limit(12)->get();
         return view('home',['product' => $product]);
     }
 
     public function shop()
     {
-        return view('shop');
+        $product = Product::where('status', 'Show')->paginate(12);
+        $category = Category::where('status', 'active')->get();
+        $tags = Tags::where('status', 'active')->get();
+        return view('shop',['product' => $product, 'category' => $category, 'tags' => $tags]);
     }
 
     public function shop_detail($id)
     {
-        return view('shop-detail');
+        $productID = substr($id,0,-10);
+
+        $productRelated = Product::where('status', 'Show')->limit(12)->get();
+        $product = Product::find($productID);
+        $product->view = $product->view+1;
+
+        // $product->save();
+
+        $productImages = ProductImages::where('id_product', $productID)->where('status', 'Show')->get();
+
+        // dd($size);
+        return view('shop-detail', ['product' => $product, 'productImages' => $productImages, 'productRelated' => $productRelated]);
     }
 
     public function blog()
