@@ -89,11 +89,83 @@ class AdminController extends Controller
       return redirect('admin/product');
     }
 
-    public function product_edit_image($id){
+    public function product_editProduct(Request $request){
       // dd($request);
-      $productImages = ProductImages::where('id_product', $id)->get();
+      if($request->promo == "null"){
+        $promo = null;
+      }else {
+        $promo = $request->promo;
+      }
+      $product = Product::find($request->id);
+      $product->name = $request->name;
+      $product->price = $request->price;
+      $product->id_promotion = $promo;
+      $product->weight = $request->weight;
+      $product->stock = $request->stok;
+      $product->category = json_encode($request->category);
+      $product->tags = json_encode($request->tags);
+      $product->color = json_encode($request->color);
+      $product->size = json_encode($request->size);
+      $product->description = $request->description;
+      $product->status = $request->status;
 
-      return view('admin.product-image',['productImages' => $productImages]);
+      $product->save();
+
+      alert()->success('Success Edit Detail Product', 'Successfully');
+      return redirect('admin/product/edit/'.$request->id);
+    }
+
+    public function product_edit($id){
+      // dd($request);
+      $product = Product::find($id);
+      $productImages = ProductImages::where('id_product', $id)->get();
+      $promotion = Promotion::where('status', 'active')->get();
+      $category = Category::where('status', 'active')->get();
+      $tag = Tags::where('status', 'active')->get();
+      $size = Sizes::where('status', 'active')->get();
+      $color = Colors::where('status', 'active')->get();
+      $tagsSelect = array();
+      $categorySelect = array();
+      $i=0;
+      foreach ($tag as $key) {
+        foreach (json_decode($product->tags) as $keyTags) {
+          $cek = false;
+          if($keyTags == $key->id){
+            $cek = true;
+            break;
+          }else {
+            $cek = false;
+          }
+        }
+        if($cek == true){
+          $tagsSelect[] = array('id' => $key->id, 'text' => $key->name, 'selected' => true);
+        }else {
+          $tagsSelect[] = array('id' => $key->id, 'text' => $key->name);
+        }
+        $i++;
+      }
+
+      foreach ($category as $key) {
+        foreach (json_decode($product->category) as $keyCategory) {
+          $cek = false;
+          if($keyCategory == $key->id){
+            $cek = true;
+            break;
+          }else {
+            $cek = false;
+          }
+        }
+        if($cek == true){
+          $categorySelect[] = array('id' => $key->id, 'text' => $key->name, 'selected' => true);
+        }else {
+          $categorySelect[] = array('id' => $key->id, 'text' => $key->name);
+        }
+        $i++;
+      }
+      // dd(json_decode($product->color));
+
+
+      return view('admin.product-edit',['categorySelect' => $categorySelect, 'tagsSelect' => $tagsSelect, 'product' => $product, 'productImages' => $productImages, 'promotion' => $promotion, 'size' => $size, 'color' => $color]);
     }
 
     public function product_imageEdit(Request $request){
@@ -114,7 +186,7 @@ class AdminController extends Controller
       $productImages->save();
 
       alert()->success('Success Change Image', 'Successfully');
-      return redirect('admin/product/edit/image/'.$request->id_product);
+      return redirect('admin/product/edit/'.$request->id_product);
     }
 
     public function product_cover(Request $request){

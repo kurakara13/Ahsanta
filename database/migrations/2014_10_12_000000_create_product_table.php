@@ -20,6 +20,8 @@ class CreateProductTable extends Migration
             $table->integer('id_promotion')->length(10)->unsigned()->nullable();
             $table->string('weight');
             $table->string('stock');
+            $table->text('category');
+            $table->text('tags');
             $table->text('color');
             $table->text('size');
             $table->text('description');

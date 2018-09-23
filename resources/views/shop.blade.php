@@ -298,7 +298,7 @@ li.tags-item {
               <div class="block2-img wrap-pic-w of-hidden pos-relative">
                 @if($key->id_promotion != null)
   							<div class="blck-promo">
-  								Sale
+  								Promo
   							</div>
   							@elseif(date("Y-m-d H:i:s") < $key->created_at->addDays(7))
   							<div class="blck-new">
@@ -341,11 +341,11 @@ li.tags-item {
 
                 @if($key->id_promotion != null)
                 <span class="block2-oldprice m-text7 p-r-5">
-                  $29.50
+                  {{$key->percentPrice()}}
                 </span>
 
                 <span class="block2-newprice m-text8 p-r-5">
-                  $15.90
+                  {{$key->promoPrice()}}
                 </span>
   							@else
   							<span class="block2-price p-r-5">

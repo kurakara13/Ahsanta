@@ -78,9 +78,8 @@ transition: all 0.2s ease 0s;
                 											<span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                        <li><a href="#">Detail</a></li>
-                                        <li><a href="#">Edit</a></li>
-                                        <li><a href="{{url('admin/product/edit/image/'.$value->id)}}">Image</a></li>
+                                        <li><a href="{{url('admin/product/detail/'.$value->id)}}">Detail</a></li>
+                                        <li><a href="{{url('admin/product/edit/'.$value->id)}}">Edit</a></li>
                                         <li><a href="#">Delete</a></li>
                                     </ul>
                                   </div>

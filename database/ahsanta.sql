@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Sep 2018 pada 16.56
+-- Waktu pembuatan: 23 Sep 2018 pada 06.03
 -- Versi server: 10.1.35-MariaDB
 -- Versi PHP: 7.2.9
 
@@ -145,6 +145,8 @@ CREATE TABLE `product` (
   `id_promotion` int(10) UNSIGNED DEFAULT NULL,
   `weight` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `stock` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tags` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `color` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `size` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -159,12 +161,12 @@ CREATE TABLE `product` (
 -- Dumping data untuk tabel `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `price`, `id_promotion`, `weight`, `stock`, `color`, `size`, `description`, `view`, `transaction`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Hijab Segi Empat Motif BLACK EDITION Bahan Sutra Satin', '30000', NULL, '500', '12', '[\"Black\",\"Whiite\"]', '[\"XL\",\"XLXX\",\"M\"]', '<ul><li>Cara pemesanan warna : Berikan Warna Pilihan Anda Silahkan Masukan Warna Pilihan Anda Pada UJUNG ALAMAT ANDA Atau berikan dalam komentar cantumkan nama anda Atau Dikirim Secara Acak (Random)</li><li>Hijab segi empat original</li><li>KEKINIAN</li><li>size 110x110</li><li>tepi jahit rapi</li><li>adem, halus , LEMBUT</li><li>Cocok untuk acara formal maupun casual</li><li data-spm-anchor-id=\"a2o4j.pdp.product_detail.i0.5fa04248tXlZ2n\">Nyaman digunakan</li><li data-spm-anchor-id=\"a2o4j.pdp.product_detail.i1.5fa04248tXlZ2n\">Perawatan mudah</li></ul>', 0, 0, 'Show', '2018-09-17 14:13:05', '2018-09-17 14:13:05'),
-(2, '17seven Original', '100000', NULL, '500', '12', '[\"Blue\",\"Yellow\",\"Black\",\"Whiite\"]', '[\"XL\",\"XLXX\",\"M\",\"S\"]', '<table><tbody><tr><td>SKU (simple)</td><td itemprop=\"sku\">02D5CAA9BDD859GS</td></tr><tr><td>Warna</td><td itemprop=\"color\">Navy</td></tr><tr><td>Petunjuk Perawatan</td><td>Cuci terpisah<br>Gunakan detergen yang lembut<br>Jangan diputar dalam mesin cuci saat pengeringan<br>Jangan gunakan pemutih<br>Setrika suhu rendah</td></tr><tr><td>Material</td><td>100% cotton combed</td></tr><tr><td>Non-sale item</td><td>Kode voucher tidak berlaku untuk produk ini</td></tr></tbody></table>', 0, 0, 'Show', '2018-09-19 22:27:48', '2018-09-19 22:27:48'),
-(3, 'B.L.F', '189500', NULL, '500', '12', '[\"Blue\",\"Whiite\"]', '[\"XL\",\"XLXX\"]', '<table><tbody><tr><td>SKU (simple)</td><td itemprop=\"sku\">4584BAA127F04CGS</td></tr><tr><td>Warna</td><td itemprop=\"color\">Blue</td></tr><tr><td>Petunjuk Perawatan</td><td>Cuci menggunakan tangan<br>Setrika suhu hangat<br>Jangan dikeringkan dengan mesin pengering</td></tr><tr><td>Material</td><td>Poliester</td></tr></tbody></table>', 0, 0, 'Show', '2018-09-19 22:38:04', '2018-09-19 22:38:04'),
-(4, 'Salsabila Etnic Kebaya', '279000', NULL, '500', '12', '[\"Whiite\"]', '[\"XLXX\",\"M\"]', '<table><tbody><tr><td>SKU (simple)</td><td itemprop=\"sku\">0891BAAD11FE49GS</td></tr><tr><td>Warna</td><td itemprop=\"color\">Red</td></tr><tr><td>Petunjuk Perawatan</td><td>Rendam dan cuci dengan tangan kurang dari 1 menit<br>Segera bilas dan angin-anginkan<br>Hindari pengeringan dengan dijemur dibawah matahari yang terlalu terik secara langsung<br>Gunakan deterjen khusus untuk kebaya atau batik</td></tr><tr><td>Material</td><td>Rubia</td></tr><tr><td>Production country</td><td>Indonesia</td></tr><tr><td>Non-sale item</td><td>Kode voucher tidak berlaku untuk produk ini</td></tr></tbody></table>', 0, 0, 'Show', '2018-09-19 22:59:37', '2018-09-19 22:59:37'),
-(5, 'Slimfit Pradita Long Sleeve', '247000', NULL, '500', '12', '[\"Blue\"]', '[\"XL\"]', '<table><tbody><tr><td>SKU (simple)</td><td itemprop=\"sku\">070E4AAA09DD9AGS</td></tr><tr><td>Warna</td><td itemprop=\"color\">Black</td></tr><tr><td>Petunjuk Perawatan</td><td>Cuci terpisah<br>Gunakan detergen yang lembut<br>Jangan diputar dalam mesin cuci saat pengeringan<br>Jangan gunakan pemutih<br>Setrika suhu rendah</td></tr><tr><td>Material</td><td>100% Cotton</td></tr><tr><td>Non-sale item</td><td>Kode voucher tidak berlaku untuk produk ini</td></tr></tbody></table>', 0, 0, 'Show', '2018-09-19 23:04:36', '2018-09-19 23:04:36');
+INSERT INTO `product` (`id`, `name`, `price`, `id_promotion`, `weight`, `stock`, `category`, `tags`, `color`, `size`, `description`, `view`, `transaction`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Hijab Segi Empat Motif BLACK EDITION Bahan Sutra Satin', '30000', 1, '500', '12', '[\"2\"]', '[\"2\",\"3\"]', '[\"Blue\",\"Yellow\",\"Whiite\"]', '[\"XL\",\"XLXX\",\"M\"]', '<ul><li>Cara pemesanan warna : Berikan Warna Pilihan Anda Silahkan Masukan Warna Pilihan Anda Pada UJUNG ALAMAT ANDA Atau berikan dalam komentar cantumkan nama anda Atau Dikirim Secara Acak (Random)</li><li>Hijab segi empat original</li><li>KEKINIAN</li><li>size 110x110</li><li>tepi jahit rapi</li><li>adem, halus , LEMBUT</li><li>Cocok untuk acara formal maupun casual</li><li data-spm-anchor-id=\"a2o4j.pdp.product_detail.i0.5fa04248tXlZ2n\">Nyaman digunakan</li><li data-spm-anchor-id=\"a2o4j.pdp.product_detail.i1.5fa04248tXlZ2n\">Perawatan mudah</li></ul>', 0, 0, 'Show', '2018-09-17 14:13:05', '2018-09-21 22:11:54'),
+(2, '17seven Original', '100000', NULL, '500', '12', '', '', '[\"Blue\",\"Yellow\",\"Black\",\"Whiite\"]', '[\"XL\",\"XLXX\",\"M\",\"S\"]', '<table><tbody><tr><td>SKU (simple)</td><td itemprop=\"sku\">02D5CAA9BDD859GS</td></tr><tr><td>Warna</td><td itemprop=\"color\">Navy</td></tr><tr><td>Petunjuk Perawatan</td><td>Cuci terpisah<br>Gunakan detergen yang lembut<br>Jangan diputar dalam mesin cuci saat pengeringan<br>Jangan gunakan pemutih<br>Setrika suhu rendah</td></tr><tr><td>Material</td><td>100% cotton combed</td></tr><tr><td>Non-sale item</td><td>Kode voucher tidak berlaku untuk produk ini</td></tr></tbody></table>', 0, 0, 'Show', '2018-09-19 22:27:48', '2018-09-19 22:27:48'),
+(3, 'B.L.F', '189500', NULL, '500', '12', '', '', '[\"Blue\",\"Whiite\"]', '[\"XL\",\"XLXX\"]', '<table><tbody><tr><td>SKU (simple)</td><td itemprop=\"sku\">4584BAA127F04CGS</td></tr><tr><td>Warna</td><td itemprop=\"color\">Blue</td></tr><tr><td>Petunjuk Perawatan</td><td>Cuci menggunakan tangan<br>Setrika suhu hangat<br>Jangan dikeringkan dengan mesin pengering</td></tr><tr><td>Material</td><td>Poliester</td></tr></tbody></table>', 0, 0, 'Show', '2018-09-19 22:38:04', '2018-09-19 22:38:04'),
+(4, 'Salsabila Etnic Kebaya', '279000', NULL, '500', '12', '', '', '[\"Whiite\"]', '[\"XLXX\",\"M\"]', '<table><tbody><tr><td>SKU (simple)</td><td itemprop=\"sku\">0891BAAD11FE49GS</td></tr><tr><td>Warna</td><td itemprop=\"color\">Red</td></tr><tr><td>Petunjuk Perawatan</td><td>Rendam dan cuci dengan tangan kurang dari 1 menit<br>Segera bilas dan angin-anginkan<br>Hindari pengeringan dengan dijemur dibawah matahari yang terlalu terik secara langsung<br>Gunakan deterjen khusus untuk kebaya atau batik</td></tr><tr><td>Material</td><td>Rubia</td></tr><tr><td>Production country</td><td>Indonesia</td></tr><tr><td>Non-sale item</td><td>Kode voucher tidak berlaku untuk produk ini</td></tr></tbody></table>', 0, 0, 'Show', '2018-09-19 22:59:37', '2018-09-19 22:59:37'),
+(5, 'Slimfit Pradita Long Sleeve', '247000', NULL, '500', '12', '', '', '[\"Blue\"]', '[\"XL\"]', '<table><tbody><tr><td>SKU (simple)</td><td itemprop=\"sku\">070E4AAA09DD9AGS</td></tr><tr><td>Warna</td><td itemprop=\"color\">Black</td></tr><tr><td>Petunjuk Perawatan</td><td>Cuci terpisah<br>Gunakan detergen yang lembut<br>Jangan diputar dalam mesin cuci saat pengeringan<br>Jangan gunakan pemutih<br>Setrika suhu rendah</td></tr><tr><td>Material</td><td>100% Cotton</td></tr><tr><td>Non-sale item</td><td>Kode voucher tidak berlaku untuk produk ini</td></tr></tbody></table>', 0, 0, 'Show', '2018-09-19 23:04:36', '2018-09-19 23:04:36');
 
 -- --------------------------------------------------------
 
@@ -221,6 +223,13 @@ CREATE TABLE `promotion` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `promotion`
+--
+
+INSERT INTO `promotion` (`id`, `name`, `minimum_order`, `minimum_price`, `ammount`, `type`, `product_use`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Diskon Gila 20%', 1, '0', '20', 'percent', 0, 'active', '2018-09-21 19:32:42', '2018-09-21 19:32:42');
 
 -- --------------------------------------------------------
 
@@ -404,7 +413,7 @@ ALTER TABLE `product_image`
 -- AUTO_INCREMENT untuk tabel `promotion`
 --
 ALTER TABLE `promotion`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `sizes`

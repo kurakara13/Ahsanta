@@ -44,7 +44,7 @@ class HomeController extends Controller
         $productID = substr($id,0,-10);
 
         $productRelated = Product::where('status', 'Show')->limit(12)->get();
-        $product = Product::find($productID);
+        $product = Product::join('promotion','product.id_promotion', '=', 'promotion.id')->find($productID);
         $product->view = $product->view+1;
 
         // $product->save();
