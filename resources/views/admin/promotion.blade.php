@@ -147,11 +147,12 @@
                 <option value="get item">Get Item</option>
                 <option value="percent">Percent</option>
                 <option value="price">Price</option>
+                <option value="free ongkir">Free Ongkir</option>
               </select>
             </div>
           </div>
           <div class="col-sm-6">
-            <div class="form-group">
+            <div class="form-group" id="input-ammount">
               <label>Ammount</label>
               <div class="input-icon">
                 <div class="icon-item left-icon icon-idr">IDR</div>
@@ -221,7 +222,7 @@
             </div>
           </div>
           <div class="col-sm-6">
-            <div class="form-group">
+            <div class="form-group" id="input-ammount-edit">
               <label>Ammount</label>
               <div class="input-icon">
                 <div class="icon-item left-icon icon-idr">IDR</div>
@@ -278,17 +279,22 @@ $(document).ready(function(){
  $(".type-change").change(function(){
    var type = $(this).val();
    if(type == "get item"){
+     $("#input-ammount").removeClass('hidden');
      $(".icon-item").removeClass('hidden');
      $(".icon-idr").addClass('hidden');
      $(".icon-percent").addClass('hidden');
    }else if (type == "price") {
+     $("#input-ammount").removeClass('hidden');
      $(".icon-item").addClass('hidden');
      $(".icon-idr").removeClass('hidden');
      $(".icon-percent").addClass('hidden');
    }else if (type == "percent") {
+     $("#input-ammount").removeClass('hidden');
      $(".icon-item").addClass('hidden');
      $(".icon-idr").addClass('hidden');
      $(".icon-percent").removeClass('hidden');
+   }else if (type == "free ongkir") {
+     $("#input-ammount").addClass('hidden');
    }
  });
 });
@@ -303,17 +309,22 @@ function edit(id,minimum_order,minimum_price,ammount,type,name,status){
   $("#id").val(id);
 
   if(type == "get item"){
+    $("#input-ammount-edit").removeClass('hidden');
     $(".icon-item").removeClass('hidden');
     $(".icon-idr").addClass('hidden');
     $(".icon-percent").addClass('hidden');
   }else if (type == "price") {
+    $("#input-ammount-edit").removeClass('hidden');
     $(".icon-item").addClass('hidden');
     $(".icon-idr").removeClass('hidden');
     $(".icon-percent").addClass('hidden');
   }else if (type == "percent") {
+    $("#input-ammount-edit").removeClass('hidden');
     $(".icon-item").addClass('hidden');
     $(".icon-idr").addClass('hidden');
     $(".icon-percent").removeClass('hidden');
+  }else if (type == "free ongkir") {
+    $("#input-ammount-edit").addClass('hidden');
   }
 }
 </script>

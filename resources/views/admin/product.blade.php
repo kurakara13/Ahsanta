@@ -66,10 +66,14 @@ transition: all 0.2s ease 0s;
                                 <td class="text-center">{{++$key}}</td>
                                 <td>{{$value->name}}</td>
                                 <td>Rp. {{$value->price}}</td>
-                                @if($value->id_promotion == null)
-                                <td>No Promotion</td>
-                                @else
-                                @endif
+                                <td>
+                                  @if($value->id_promotion == null)
+                                  No Promotion
+                                  @else
+                                  <?php $promo = DB::table('promotion')->find($key) ?>
+                                  {{$promo->name}}
+                                  @endif
+                                </td>
                                 <td class="text-center">{{$value->stock}}</td>
                                 <td class="text-center">{{strtoupper($value->status)}}</td>
                                 <td class="text-center">

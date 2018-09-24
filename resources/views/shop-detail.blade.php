@@ -57,6 +57,13 @@
   top: 12px;
   left: 12px;
 }
+
+.cat-tag{
+  background: #0000002e;
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
+}
 </style>
 @stop
 
@@ -132,15 +139,20 @@
       </h4>
 
       @if($product->id_promotion != null)
+      @if($promo->type == 'free ongkir')
+      <span class="block2-price m-text17 p-r-5">
+        {{$product->percentPrice()}}
+      </span>
+      @else
       <span class="block2-oldprice m-text7 m-text17 p-r-5">
         {{$product->percentPrice()}}
       </span>
-
+      @endif
       <span class="block2-newprice m-text8 m-text8 p-r-5">
-        {{$product->promoPrice()}}
+        {!!$product->promoPrice()!!}
       </span>
       @else
-      <span class="block2-price p-r-5">
+      <span class="block2-price m-text17 p-r-5">
        {{$product->percentPrice()}}
       </span>
       @endif
@@ -149,21 +161,24 @@
       </span> -->
 
       @if($product->id_promotion != null)
-      <div class="wrap-dropdown-content bo6 p-t-15 p-b-14 active-dropdown-content">
+      <div class="wrap-dropdown-content bo6 p-t-15 p-b-14">
         <h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
-          Description
+          Promotion
           <i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
           <i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
         </h5>
 
         <div class="dropdown-content dis-none p-t-15 p-b-23">
-            {!!$product->description!!}
+            <p>{{$promo->name}}</p>
+            <p>Order Minimum : {{$promo->minimum_order}}</p>
+            <p>Price Minimum : {{$promo->percentPricePromo()}}</p>
         </div>
       </div>
       @endif
 
       <!--  -->
       <div class="p-t-33 p-b-60">
+        @if($product->size != null)
         <div class="flex-m flex-w p-b-10">
           <div class="s-text15 w-size15 t-center">
             Size
@@ -178,7 +193,9 @@
             </select>
           </div>
         </div>
+        @endif
 
+        @if($product->color != null)
         <div class="flex-m flex-w">
           <div class="s-text15 w-size15 t-center">
             Color
@@ -193,6 +210,7 @@
             </select>
           </div>
         </div>
+        @endif
 
         <div class="flex-r-m flex-w p-t-10">
           <div class="w-size16 flex-m flex-w">
@@ -219,8 +237,26 @@
       </div>
 
       <div class="p-b-45">
-        <span class="s-text8 m-r-35">SKU: MUG-01</span>
-        <span class="s-text8">Categories: Mug, Design</span>
+        <div class="row">
+          <div class="col-sm-6">
+            <p class="s-text8 m-r-35">Category</p>
+            <hr>
+            @foreach (json_decode($product->category) as $key)
+            <?php $category = DB::table('category')->find($key) ?>
+            <a href="" class="s-text8 m-r-15 cat-tag">{{$category->name}}</a>
+            @endforeach
+          </div>
+          <div class="col-sm-6">
+            <p class="s-text8 m-r-35">Tags</p>
+            <hr>
+            @foreach (json_decode($product->tags) as $key)
+            <?php $tags = DB::table('tags')->find($key) ?>
+            <a href="" class="s-text8 m-r-15 cat-tag">{{$tags->name}}</a>
+            @endforeach
+          </div>
+        </div>
+        <!-- <span class="s-text8 m-r-35">SKU: MUG-01</span>
+        <span class="s-text8">Categories: Mug, Design</span> -->
       </div>
 
       <!--  -->
@@ -328,19 +364,19 @@
                 {{$key->name}}
               </a>
 
-							@if($key->id_promotion != null)
+              @if($key->id_promotion != null)
               <span class="block2-oldprice m-text7 p-r-5">
-                $29.50
+                {{$key->percentPrice()}}
               </span>
 
               <span class="block2-newprice m-text8 p-r-5">
-                $15.90
+                {{$key->promoPrice()}}
               </span>
-							@else
-							<span class="block2-price p-r-5">
-							 {{$key->percentPrice()}}
-							</span>
-							@endif
+              @else
+              <span class="block2-price p-r-5">
+               {{$key->percentPrice()}}
+              </span>
+              @endif
             </div>
           </div>
         </div>

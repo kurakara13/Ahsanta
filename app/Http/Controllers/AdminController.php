@@ -128,14 +128,18 @@ class AdminController extends Controller
       $categorySelect = array();
       $i=0;
       foreach ($tag as $key) {
-        foreach (json_decode($product->tags) as $keyTags) {
-          $cek = false;
-          if($keyTags == $key->id){
-            $cek = true;
-            break;
-          }else {
+        if($product->tags != null){
+          foreach (json_decode($product->tags) as $keyTags) {
             $cek = false;
+            if($keyTags == $key->id){
+              $cek = true;
+              break;
+            }else {
+              $cek = false;
+            }
           }
+        }else {
+          $cek = false;
         }
         if($cek == true){
           $tagsSelect[] = array('id' => $key->id, 'text' => $key->name, 'selected' => true);
@@ -146,14 +150,18 @@ class AdminController extends Controller
       }
 
       foreach ($category as $key) {
-        foreach (json_decode($product->category) as $keyCategory) {
-          $cek = false;
-          if($keyCategory == $key->id){
-            $cek = true;
-            break;
-          }else {
+        if($product->category != null){
+          foreach (json_decode($product->category) as $keyCategory) {
             $cek = false;
+            if($keyCategory == $key->id){
+              $cek = true;
+              break;
+            }else {
+              $cek = false;
+            }
           }
+        }else {
+          $cek = false;
         }
         if($cek == true){
           $categorySelect[] = array('id' => $key->id, 'text' => $key->name, 'selected' => true);

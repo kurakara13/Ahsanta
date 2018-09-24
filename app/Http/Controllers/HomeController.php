@@ -7,6 +7,7 @@ use App\Product;
 use App\ProductImages;
 use App\Category;
 use App\Tags;
+use App\Promotion;
 
 class HomeController extends Controller
 {
@@ -44,15 +45,18 @@ class HomeController extends Controller
         $productID = substr($id,0,-10);
 
         $productRelated = Product::where('status', 'Show')->limit(12)->get();
-        $product = Product::join('promotion','product.id_promotion', '=', 'promotion.id')->find($productID);
+        $product = Product::find($productID);
         $product->view = $product->view+1;
+
+        $promo = Promotion::find($product->id_promotion);
+
 
         // $product->save();
 
         $productImages = ProductImages::where('id_product', $productID)->where('status', 'Show')->get();
 
         // dd($size);
-        return view('shop-detail', ['product' => $product, 'productImages' => $productImages, 'productRelated' => $productRelated]);
+        return view('shop-detail', ['promo' => $promo, 'product' => $product, 'productImages' => $productImages, 'productRelated' => $productRelated]);
     }
 
     public function blog()

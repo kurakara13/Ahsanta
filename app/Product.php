@@ -17,8 +17,11 @@ class Product extends Model
     $promotion = Promotion::find($this->id_promotion);
     if($promotion->type == "percent"){
       $price = $this->price - (($promotion->ammount/100)*$this->price);
+      return 'Rp. '.number_format($price);
+    }elseif($promotion->type == "free ongkir"){
+      $price = $this->price - (($promotion->ammount/100)*$this->price);
+      return '<i class="fa fa-archive"></i> Free Ongkir';
     }
-    
-    return 'Rp. '.number_format($price);
+
   }
 }
