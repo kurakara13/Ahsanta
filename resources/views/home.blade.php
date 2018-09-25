@@ -194,6 +194,7 @@
 
                 <div class="block2-btn-addcart w-size1 trans-0-4">
                   <!-- Button -->
+									<input type="hidden" class="product" value="{{$key->id}}">
                   <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
                     Add to Cart
                   </button>
@@ -207,13 +208,19 @@
               </a>
 
 							@if($key->id_promotion != null)
-              <span class="block2-oldprice m-text7 p-r-5">
-                $29.50
-              </span>
-
-              <span class="block2-newprice m-text8 p-r-5">
-                $15.90
-              </span>
+							<?php $promotion = DB::table('promotion')->find($key->id_promotion);?>
+							@if($promotion->type == 'free ongkir' || $promotion->type == 'get item')
+							<span class="block2-price p-r-5">
+							 {{$key->percentPrice()}}
+							</span>
+							@else
+							<span class="block2-oldprice m-text7 p-r-5">
+								{{$key->percentPrice()}}
+							</span>
+							@endif
+							<span class="block2-newprice m-text8 p-r-5">
+								{!!$key->promoPrice()!!}
+							</span>
 							@else
 							<span class="block2-price p-r-5">
 							 {{$key->percentPrice()}}
@@ -766,6 +773,31 @@
 	$('.block2-btn-addcart').each(function(){
 		var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
 		$(this).on('click', function(){
+			let product = $(this).children('.product').val();
+
+			$.ajaxSetup({
+					headers: {
+			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    }
+        });
+				jQuery.ajax({
+				 url: "{{ url('/add/cart') }}",
+				 method: 'post',
+				 data: {
+						id: product,
+				 },
+				 success: function(response){
+						console.log(response);
+				 },
+				 error: function(response){
+						var errors = response.responseJSON;
+						console.log(errors);
+						// Render the errors with js ...
+					}
+			 });
+
+			// let img = product.find('img');
+			console.log(product[0]);
 			swal(nameProduct, "is added to cart !", "success");
 		});
 	});

@@ -84,6 +84,19 @@ li.tags-item {
     background-color: #222222;
     color: white;
 }
+
+.menu-active{
+  color:#e65540;
+}
+
+.tags-active{
+  background:#e65540;
+  color:#fff;
+}
+
+.tags-active a{
+  color:#fff;
+}
 </style>
 @stop
 
@@ -142,16 +155,34 @@ li.tags-item {
 
           <ul class="p-b-54">
             <li class="p-t-4">
-              <a href="#" class="s-text13 active1">
+              @if(isset($_GET['category']))
+              <a href="{{url('shop')}}" class="s-text13">
                 All
               </a>
+              @else
+              <a href="{{url('shop')}}" class="s-text13 menu-active">
+                All
+              </a>
+              @endif
             </li>
 
             @foreach($category as $key)
             <li class="p-t-4">
-              <a href="#" class="s-text13">
+              @if(isset($_GET['category']))
+                @if($_GET['category'] == $key->name)
+                <a href="?category={{$key->name}}" class="s-text13 menu-active">
+                  {{$key->name}}
+                </a>
+                @else
+                <a href="?category={{$key->name}}" class="s-text13">
+                  {{$key->name}}
+                </a>
+                @endif
+              @else
+              <a href="?category={{$key->name}}" class="s-text13">
                 {{$key->name}}
               </a>
+              @endif
             </li>
             @endforeach
 
@@ -164,10 +195,51 @@ li.tags-item {
           <ul class="p-b-54">
 
             @foreach($tags as $key)
-            <li class="tags-item">
-              <a href="#" class="s-text13">
-                {{$key->name}}
-              </a>
+              @if(isset($_GET['category']))
+                @if(isset($_GET['tags']))
+                  @if (strpos($_GET['tags'], $key->name) !== false)
+                  <li class="tags-item tags-active">
+                  <a href="?category={{$_GET['category']}}&tags={{trim($_GET['tags'], $key->name)}}" class="s-text13">
+                    {{$key->name}}
+                  </a>
+                  @else
+                  <li class="tags-item">
+                    @if($_GET['tags'] == '')
+                      <a href="?category={{$_GET['category']}}&tags={{$key->name}}" class="s-text13">
+                        {{$key->name}}
+                      </a>
+                    @else
+                      <a href="?category={{$_GET['category']}}&tags={{$_GET['tags'].'+'.$key->name}}" class="s-text13">
+                        {{$key->name}}
+                      </a>
+                    @endif
+                  @endif
+                @else
+                <li class="tags-item">
+                <a href="?category={{$_GET['category']}}&tags={{$key->name}}" class="s-text13">
+                  {{$key->name}}
+                </a>
+                @endif
+              @else
+                @if(isset($_GET['tags']))
+                  @if (strpos($_GET['tags'], $key->name) !== false)
+                  <li class="tags-item tags-active">
+                  <a href="?tags={{trim($_GET['tags'], $key->name)}}" class="s-text13">
+                    {{$key->name}}
+                  </a>
+                  @else
+                  <li class="tags-item">
+                  <a href="?tags={{$_GET['tags'].'+'.$key->name}}" class="s-text13">
+                    {{$key->name}}
+                  </a>
+                  @endif
+                @else
+                <li class="tags-item">
+                <a href="?tags={{$key->name}}" class="s-text13">
+                  {{$key->name}}
+                </a>
+                @endif
+              @endif
             </li>
             @endforeach
 
@@ -340,12 +412,18 @@ li.tags-item {
                 </a>
 
                 @if($key->id_promotion != null)
+                <?php $promotion = DB::table('promotion')->find($key->id_promotion);?>
+                @if($promotion->type == 'free ongkir' || $promotion->type == 'get item')
+                <span class="block2-price p-r-5">
+                 {{$key->percentPrice()}}
+                </span>
+                @else
                 <span class="block2-oldprice m-text7 p-r-5">
                   {{$key->percentPrice()}}
                 </span>
-
+                @endif
                 <span class="block2-newprice m-text8 p-r-5">
-                  {{$key->promoPrice()}}
+                  {!!$key->promoPrice()!!}
                 </span>
   							@else
   							<span class="block2-price p-r-5">

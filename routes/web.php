@@ -24,6 +24,10 @@ Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/cart', 'HomeController@cart')->name('cart');
 
+//Ajax
+Route::post('/add/cart', 'AjaxController@add_cart')->name('add.cart');
+
+
 
 Route::prefix('admin')->group(function() {
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');

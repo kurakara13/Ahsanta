@@ -64,7 +64,14 @@
   padding: 5px;
   border-radius: 10px;
 }
+<?php if(count($productImages) == 0){ ?>
+
+li.slick-active{
+  display: none;
+}
+<?php } ?>
 </style>
+
 @stop
 
 @section('menu')
@@ -122,13 +129,21 @@
         <div class="wrap-slick3-dots"></div>
 
         <div class="slick3">
-          @foreach($productImages as $key)
-          <div class="item-slick3" data-thumb="{{asset('images/product/'.$key->name)}}">
+          @if(count($productImages) == 0)
+          <div class="item-slick3" data-thumb="{{asset('images/product/No_Image_Available.jpg')}}">
             <div class="wrap-pic-w">
-              <img src="{{asset('images/product/'.$key->name)}}" alt="IMG-PRODUCT">
+              <img src="{{asset('images/product/No_Image_Available.jpg')}}" alt="IMG-PRODUCT" style="height:700px">
             </div>
           </div>
-          @endforeach
+          @else
+            @foreach($productImages as $key)
+            <div class="item-slick3" data-thumb="{{asset('images/product/'.$key->name)}}">
+              <div class="wrap-pic-w">
+                <img src="{{asset('images/product/'.$key->name)}}" alt="IMG-PRODUCT">
+              </div>
+            </div>
+            @endforeach
+          @endif
         </div>
       </div>
     </div>
@@ -139,7 +154,7 @@
       </h4>
 
       @if($product->id_promotion != null)
-      @if($promo->type == 'free ongkir')
+      @if($promo->type == 'free ongkir' || $promo->type == 'get item')
       <span class="block2-price m-text17 p-r-5">
         {{$product->percentPrice()}}
       </span>
@@ -241,18 +256,22 @@
           <div class="col-sm-6">
             <p class="s-text8 m-r-35">Category</p>
             <hr>
-            @foreach (json_decode($product->category) as $key)
-            <?php $category = DB::table('category')->find($key) ?>
-            <a href="" class="s-text8 m-r-15 cat-tag">{{$category->name}}</a>
-            @endforeach
+            @if($product->category != null)
+              @foreach (json_decode($product->category) as $key)
+              <?php $category = DB::table('category')->find($key) ?>
+              <a href="" class="s-text8 m-r-15 cat-tag">{{$category->name}}</a>
+              @endforeach
+            @endif
           </div>
           <div class="col-sm-6">
             <p class="s-text8 m-r-35">Tags</p>
             <hr>
-            @foreach (json_decode($product->tags) as $key)
-            <?php $tags = DB::table('tags')->find($key) ?>
-            <a href="" class="s-text8 m-r-15 cat-tag">{{$tags->name}}</a>
-            @endforeach
+            @if($product->tags != null)
+              @foreach (json_decode($product->tags) as $key)
+              <?php $tags = DB::table('tags')->find($key) ?>
+              <a href="" class="s-text8 m-r-15 cat-tag">{{$tags->name}}</a>
+              @endforeach
+            @endif
           </div>
         </div>
         <!-- <span class="s-text8 m-r-35">SKU: MUG-01</span>
@@ -365,12 +384,18 @@
               </a>
 
               @if($key->id_promotion != null)
+              <?php $promotion = DB::table('promotion')->find($key->id_promotion);?>
+              @if($promotion->type == 'free ongkir' || $promotion->type == 'get item')
+              <span class="block2-price p-r-5">
+               {{$key->percentPrice()}}
+              </span>
+              @else
               <span class="block2-oldprice m-text7 p-r-5">
                 {{$key->percentPrice()}}
               </span>
-
+              @endif
               <span class="block2-newprice m-text8 p-r-5">
-                {{$key->promoPrice()}}
+                {!!$key->promoPrice()!!}
               </span>
               @else
               <span class="block2-price p-r-5">
@@ -595,7 +620,7 @@
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
 			$(this).on('click', function(){
 				swal(nameProduct, "is added to cart !", "success");
-			});
+      });
 		});
 
 		$('.block2-btn-addwishlist').each(function(){

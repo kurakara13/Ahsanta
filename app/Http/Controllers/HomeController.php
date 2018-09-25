@@ -37,6 +37,8 @@ class HomeController extends Controller
         $product = Product::where('status', 'Show')->paginate(12);
         $category = Category::where('status', 'active')->get();
         $tags = Tags::where('status', 'active')->get();
+
+        // dd($product);
         return view('shop',['product' => $product, 'category' => $category, 'tags' => $tags]);
     }
 
@@ -51,7 +53,7 @@ class HomeController extends Controller
         $promo = Promotion::find($product->id_promotion);
 
 
-        // $product->save();
+        $product->save();
 
         $productImages = ProductImages::where('id_product', $productID)->where('status', 'Show')->get();
 

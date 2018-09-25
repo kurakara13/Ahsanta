@@ -96,16 +96,41 @@ class AdminController extends Controller
       }else {
         $promo = $request->promo;
       }
+
+      if(isset($request->tags)){
+        $tags = json_encode($request->tags);
+      }else {
+        $tags = null;
+      }
+
+      if(isset($request->category)){
+        $category = json_encode($request->category);
+      }else {
+        $category = null;
+      }
+
+      if(isset($request->color)){
+        $color = json_encode($request->color);
+      }else {
+        $color = null;
+      }
+
+      if(isset($request->size)){
+        $size = json_encode($request->size);
+      }else {
+        $size = null;
+      }
+
       $product = Product::find($request->id);
       $product->name = $request->name;
       $product->price = $request->price;
       $product->id_promotion = $promo;
       $product->weight = $request->weight;
       $product->stock = $request->stok;
-      $product->category = json_encode($request->category);
-      $product->tags = json_encode($request->tags);
-      $product->color = json_encode($request->color);
-      $product->size = json_encode($request->size);
+      $product->category = $category;
+      $product->tags = $tags;
+      $product->color = $color;
+      $product->size = $size;
       $product->description = $request->description;
       $product->status = $request->status;
 

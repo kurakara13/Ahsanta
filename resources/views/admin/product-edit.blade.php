@@ -240,6 +240,9 @@ input:checked + .slider:before {
                                                         <label class="control-label" for="color">{{$key->name}}</label>
                                                         <label class="switch">
                                                           <?php
+                                                          if($product->color == null){
+                                                            $cek = "";
+                                                          }else {
                                                             foreach (json_decode($product->color) as $keyColor) {
                                                               $cek = "";
                                                               if($keyColor == $key->name){
@@ -249,6 +252,7 @@ input:checked + .slider:before {
                                                                 $cek = "";
                                                               }
                                                             }
+                                                          }
                                                            ?>
                                                           <input type="checkbox" class="color-input" value="{{$key->name}}" name="color[]" {{$cek}}>
                                                           <span class="slider round"></span>
@@ -341,13 +345,17 @@ input:checked + .slider:before {
                                                       <label class="control-label" for="size">{{$key->name}}</label>
                                                       <label class="switch">
                                                         <?php
-                                                          foreach (json_decode($product->size) as $keySize) {
+                                                          if($product->size == null){
                                                             $cek = "";
-                                                            if($keySize == $key->name){
-                                                              $cek = "checked";
-                                                              break;
-                                                            }else {
+                                                          }else {
+                                                            foreach (json_decode($product->size) as $keySize) {
                                                               $cek = "";
+                                                              if($keySize == $key->name){
+                                                                $cek = "checked";
+                                                                break;
+                                                              }else {
+                                                                $cek = "";
+                                                              }
                                                             }
                                                           }
                                                          ?>
