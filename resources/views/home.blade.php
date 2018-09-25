@@ -788,6 +788,7 @@
 				 },
 				 success: function(response){
 						console.log(response);
+						swal(nameProduct, response.message, response.type);
 				 },
 				 error: function(response){
 						var errors = response.responseJSON;
@@ -795,10 +796,6 @@
 						// Render the errors with js ...
 					}
 			 });
-
-			// let img = product.find('img');
-			console.log(product[0]);
-			swal(nameProduct, "is added to cart !", "success");
 		});
 	});
 

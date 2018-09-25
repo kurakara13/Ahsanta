@@ -133,8 +133,17 @@
 								</li>
 							</ul>
 
-							<div class="header-cart-total">
-								Total: $75.00
+							<div class="row">
+								<div class="col-sm-5">
+									<a href="#" class="header-cart-total empty-cart">
+										Empty Cart
+									</a>
+								</div>
+								<div class="col-sm-7">
+									<div class="header-cart-total">
+										Total: $75.00
+									</div>
+								</div>
 							</div>
 
 							<div class="header-cart-buttons">
@@ -224,8 +233,17 @@
 								</li>
 							</ul>
 
-							<div class="header-cart-total">
-								Total: $75.00
+							<div class="row">
+								<div class="col-sm-5">
+									<a href="#" class="header-cart-total empty-cart">
+										Empty Cart
+									</a>
+								</div>
+								<div class="col-sm-7">
+									<div class="header-cart-total">
+										Total: $75.00
+									</div>
+								</div>
 							</div>
 
 							<div class="header-cart-buttons">
@@ -338,6 +356,31 @@
 <!--===============================================================================================-->
 	<script src="{{asset('assets/js/main.js')}}"></script>
 <!--===============================================================================================-->
-  @yield('javascript')
+	<script>
+		$('.empty-cart').on('click', function(){
+			let product = $(this).children('.product').val();
+
+			$.ajaxSetup({
+					headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					}
+				});
+				jQuery.ajax({
+				 url: "{{ url('/delete/cart') }}",
+				 method: 'post',
+				 data: null,
+				 success: function(response){
+						console.log(response);
+						swal('Shopping Cart', response.message, response.type);
+				 },
+				 error: function(response){
+						var errors = response.responseJSON;
+						console.log(errors);
+						// Render the errors with js ...
+					}
+			 });
+		});
+	</script>
+	@yield('javascript')
 </body>
 </html>

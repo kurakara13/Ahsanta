@@ -8,6 +8,7 @@ use App\ProductImages;
 use App\Category;
 use App\Tags;
 use App\Promotion;
+use Session;
 
 class HomeController extends Controller
 {
@@ -28,6 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+      // dd(Session::all());
         $product = Product::where('status', 'Show')->limit(12)->get();
         return view('home',['product' => $product]);
     }

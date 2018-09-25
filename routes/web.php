@@ -26,6 +26,7 @@ Route::get('/cart', 'HomeController@cart')->name('cart');
 
 //Ajax
 Route::post('/add/cart', 'AjaxController@add_cart')->name('add.cart');
+Route::post('/delete/cart', 'AjaxController@empty_cart')->name('empty.cart');
 
 
 
