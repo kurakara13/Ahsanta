@@ -31,27 +31,63 @@ Route::post('/delete/cart', 'AjaxController@empty_cart')->name('empty.cart');
 
 
 Route::prefix('admin')->group(function() {
-    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
-    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+  Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+  Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+  Route::namespace('Admin')->group(function () {
     Route::get('/', 'AdminController@dashboard')->name('admin.home');
     Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
-    Route::get('/product', 'AdminController@product')->name('product');
-    Route::get('/product/add', 'AdminController@product_add_form')->name('product.add.form');
-    Route::get('/product/edit/{id}', 'AdminController@product_edit')->name('product.edit');
-    Route::get('/product/detail/{id}', 'AdminController@product_detail')->name('product.detail');
-    Route::get('/category', 'AdminController@category')->name('category');
-    Route::get('/tag', 'AdminController@tag')->name('tag');
-    Route::get('/size', 'AdminController@size')->name('size');
-    Route::get('/color', 'AdminController@color')->name('color');
-    Route::get('/promotion', 'AdminController@promotion')->name('promotion');
-    Route::get('/transaction', 'AdminController@transaction')->name('transaction');
-    Route::get('/order', 'AdminController@order')->name('order');
-    Route::get('/payment', 'AdminController@payment')->name('payment');
-    Route::get('/shipping', 'AdminController@shipping')->name('shipping');
-    Route::get('/user', 'AdminController@user')->name('user');
     Route::post('/{previx}/{action}', function($prefix, $action, Request $request){
       $app = app();
       $ctr = $app->make('\App\Http\Controllers\AdminController');
       return $ctr->callAction("{$prefix}_{$action}", [$request]);
     });
   });
+
+  Route::namespace('Product')->group(function () {
+    Route::get('/product', 'ProductController@index')->name('admin.product');
+    Route::get('/product/add', 'ProductController@product_add_form')->name('admin.product.add.form');
+    Route::get('/product/edit/{id}', 'ProductController@product_edit')->name('admin.product.edit');
+    Route::get('/product/detail/{id}', 'ProductController@product_detail')->name('admin.product.detail');
+  });
+
+  Route::namespace('Category')->group(function () {
+    Route::get('/category', 'CategoryController@index')->name('admin. category');
+  });
+
+  Route::namespace('Tag')->group(function () {
+    Route::get('/tag', 'TagController@index')->name('admin.tag');
+  });
+
+  Route::namespace('Size')->group(function () {
+    Route::get('/size', 'SizeController@index')->name('admin.size');
+  });
+
+  Route::namespace('Color')->group(function () {
+    Route::resource('color', 'ColorController');
+  });
+
+  Route::namespace('Promotion')->group(function () {
+    Route::get('/promotion', 'PromotionController@index')->name('admin.promotion');
+  });
+
+  Route::namespace('Transaction')->group(function () {
+    Route::get('/transaction', 'TransactionController@index')->name('admin.transaction');
+  });
+
+  Route::namespace('Order')->group(function () {
+    Route::get('/order', 'OrderController@index')->name('admin.order');
+  });
+
+  Route::namespace('Shipping')->group(function () {
+    Route::get('/shipping', 'ShippingController@index')->name('admin.shipping');
+  });
+
+  Route::namespace('Payment')->group(function () {
+    Route::get('/payment', 'PaymentController@index')->name('admin.payment');
+  });
+
+  Route::namespace('User')->group(function () {
+    Route::get('/user', 'UserController@index')->name('admin.user');
+  });
+
+});

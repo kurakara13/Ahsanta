@@ -53,11 +53,13 @@
                                   <ul class="list-inline">
                                     <li class="list-inline-item"><button class="btn btn-success trigger" data-iziModal-open="#modal-edit" onclick="edit({{$value->id}},'{{$value->name}}','{{$value->status}}')"><i class="fa fa-edit"></i></button></li>
                                     <li class="list-inline-item">
-                                      <form method="post" action="{{url('admin/color/delete')}}">
+                                      <!-- <form method="post" action="{{url('admin/color/delete')}}">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" name="id" value="{{$value->id}}">
                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                      </form>
+                                      </form> -->
+                                      @include('admin.partials.delete-item', ['route' => route('color.destroy', compact('value'))])
+
                                     </li>
                                   </ul>
                                 </td>
@@ -82,8 +84,8 @@
       <label>Add Color</label>
     </div>
     <div class="modal-body">
-      <form method="post" action="{{url('admin/color/add')}}">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+      <form method="POST" action="{{ route('color.store') }}">
+        @csrf
         <div class="row">
           <div class="col-sm-8">
             <input type="text" name="name" class="form-control" placeholder="Color Name">
@@ -111,9 +113,9 @@
       <label>Add Color</label>
     </div>
     <div class="modal-body">
-      <form method="post" action="{{url('admin/color/edit')}}">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <input type="hidden" name="id" id="id">
+      <form method="POST" id="edit-url">
+        @method('PUT')
+        @csrf
         <div class="row">
           <div class="col-sm-8">
             <input type="text" name="name" id="name" class="form-control" placeholder="Color Name">
@@ -148,6 +150,7 @@ $(document).ready(function(){
 });
 
 function edit(id,name,status){
+  $("#edit-url").attr("action", "{{url('admin/color')}}/"+id);
   $("#name").val(name);
   $("#status").val(status);
   $("#id").val(id);
